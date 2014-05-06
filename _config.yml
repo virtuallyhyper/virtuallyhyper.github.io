@@ -1,6 +1,6 @@
 # This is the default format. 
 # For more see: http://jekyllrb.com/docs/permalinks/
-permalink: /:categories/:year/:month/:day/:title 
+permalink: /:year/:month/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 pygments: true
@@ -8,13 +8,13 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Jekyll Bootstrap
-tagline: Site Tagline
+title : VirtuallyHyper
+tagline: A Virtualization Blog
 author :
-  name : Name Lastname
-  email : blah@email.test
+  name : VirtuallyHyper
+  email : contact@virtuallyhyper.com
   github : username
-  twitter : username
+  twitter : virtuallyhyper
   feedburner : feedname
 
 # The production_url is only used when full-domain names are needed
@@ -25,7 +25,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://username.github.io
+production_url : http://beta.virtuallyhyper.com
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -54,7 +54,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  BASE_PATH : false
+  # BASE_PATH : http://blog.joechan.us/vh2-jekyll
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
@@ -100,7 +100,8 @@ JB :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-123-12'
+        tracking_id : 'UA-7265705-7'
+        domain: 'virtuallyhyper.com'
     getclicky :
       site_id : 
     mixpanel :
@@ -128,3 +129,34 @@ JB :
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
   
+# VH settings
+paginate: 10
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+  
+authors:
+  joe:
+    name: 'Joe Chan'
+    display_name: Joe
+    gravatar: a
+    email: a
+    web: a
+    twitter: a
+    github: a
+  jarret:
+    name: 'Jarret Lavallee'
+    display_name: Jarret
+    gravatar: b
+    email: b
+    web: b
+    twitter: b
+    github: b
+  karim:
+    name: 'Karim Elatov'
+    display_name: Karim
+    gravatar: c
+    email: c
+    web: c
+    twitter: c
+    github: c
