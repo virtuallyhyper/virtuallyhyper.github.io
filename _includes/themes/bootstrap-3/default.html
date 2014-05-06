@@ -72,9 +72,58 @@
         </div><!-- /.navbar-collapse -->
       </nav>
 
-      <div class="container">
-        {{ content }}
-      </div>
+      <div class="row-fluid">
+        <div class="span8">
+          {{ content }}
+        </div>
+        <div class="span4">
+          <ul class="nav nav-list well">
+            <li class="nav-header">
+                Like what we do?
+            </li>
+            <li><center>
+                <a href="http://bit.ly/donate-to-virtuallyhyper" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" /></a>
+                <script id='fbxiqa3'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=virtuallyhyper&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbxiqa3');</script>
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+                <script type="text/javascript" src="https://blockchain.info//Resources/wallet/pay-now-button.js"></script>
+                <div style="font-size:10px;margin:0 auto;width:250px" class="blockchain-btn"
+                     data-address="1LbaicuGY3RsusHonGmwhXWaUw2yYnj2k3"
+                     data-shared="false">
+                    <div class="blockchain stage-begin">
+                        <img src="http://i.imgur.com/zTI9f5u.png"/>
+                    </div>
+                    <div class="blockchain stage-loading" style="text-align:center">
+                        <img src="https://blockchain.info//Resources/loading-large.gif"/>
+                    </div>
+                    <div class="blockchain stage-ready">
+                         <p align="center">Our Bitcoin Address: <b><br>[[address]]</b></p>
+                         <p align="center" class="qr-code"></p>
+                    </div>
+                    <div class="blockchain stage-paid">
+                         Donation of <b>[[value]] BTC</b> Received. Thank You.
+                    </div>
+                    <div class="blockchain stage-error">
+                        <font color="red">[[error]]</font>
+                    </div>
+                </div>
+            </center></li>
+            <li class="nav-header">
+                Pages
+            </li>
+            <li>
+                <a href="#">About</a>
+            </li>
+            <li class="divider">
+            </li>
+            <li class="nav-header">
+               Disclaimer 
+            </li>
+            <li>
+                <p>The contents of this blog reflect the views of the author(s) and do not necessarily reflect the official views or policy of any of the mentioned companies and/or companies. The information provided here is provided as-is. We are not responsible for any loss of data.</p>
+            </li>
+          </ul>
+        </div><!-- div class="span4" -->
+      </div><!-- div class="row-fluid" -->
 
     </div>
 
