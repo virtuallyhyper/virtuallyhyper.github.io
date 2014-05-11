@@ -1,3 +1,14 @@
+# Notes
+
+## Deploy from beta
+
+    git clone git@github.com:virtuallyhyper/virtuallyhyper.github.io.git
+    
+    cd virtuallyhyper.github.io
+    git remote add upstream git@github.com:virtuallyhyper/vhbeta.git
+    git checkout master
+    git merge upstream/gh-pages
+
 # Jekyll-Bootstrap
 
 The quickest way to start and publish your Jekyll powered blog. 100% compatible with GitHub pages
