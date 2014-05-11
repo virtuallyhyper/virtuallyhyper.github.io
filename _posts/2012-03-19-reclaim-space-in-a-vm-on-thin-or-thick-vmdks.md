@@ -30,7 +30,7 @@ There are many different scenarios where this comes into play, and there many di
 
 **Solution 1:**
 
-****Storage vMotion the VM to another datastore and convert it to thin. See the following link on how to do that: [Reclaiming disk Space with Storage vMotion and Thin Provisioning](http://www.thelowercasew.com/reclaiming-disk-space-with-storage-vmotion-and-thin-provisioning). When storage vMotioning the VM, ensure the source and destination datastores have a different block size. This link talks about why: [Blocksize Impact](http://www.yellow-bricks.com/2011/02/18/blocksize-impact/).
+Storage vMotion the VM to another datastore and convert it to thin. See the following link on how to do that: [Reclaiming disk Space with Storage vMotion and Thin Provisioning](http://www.thelowercasew.com/reclaiming-disk-space-with-storage-vmotion-and-thin-provisioning). When storage vMotioning the VM, ensure the source and destination datastores have a different block size. This link talks about why: [Blocksize Impact](http://www.yellow-bricks.com/2011/02/18/blocksize-impact/).
 
 **Solution 2:**
 Use VMware Converter and do a V2V of the VM and choose Thin for the destination disk type.
@@ -142,13 +142,13 @@ Then you need to mount the partition as read-only and run zerofree on it. If you
 
 Then Storage vMotion the VM to another datastore with another block size converting the disk to thin.
 
-*NOTE: Instead of using 'rm' to delete files, you can use 'shred' and then you wouldn't need to zero out deleted space.
+**NOTE:** Instead of using 'rm' to delete files, you can use 'shred' and then you wouldn't need to zero out deleted space.
 
 
 #### **Solution 2:**
 
 
-****Use VMware Converter and do a P2V of the VM. [The post 'P2V with VMware Converter Standalone 5 and sync feature](http://www.vi-tips.com/2011/11/p2v-with-vmware-converter-standalone-5.html)' has a good video on how to do that. Make sure you choose thin for the disk type.
+Use VMware Converter and do a P2V of the VM. [The post 'P2V with VMware Converter Standalone 5 and sync feature](http://www.vi-tips.com/2011/11/p2v-with-vmware-converter-standalone-5.html)' has a good video on how to do that. Make sure you choose thin for the disk type.
 
 
 ## Scenario 3: Reclaim previously used space from thin disks
@@ -156,7 +156,7 @@ Then Storage vMotion the VM to another datastore with another block size convert
 
 **Solution 1:**
 
-****If you using windows, use sDelete to reclaim the space and then SvMotion to keep the disk format. If using Linux, use zerofree to reclaim the space and then SvMotion to another datastore with another block size keeping the disk format
+If you using windows, use sDelete to reclaim the space and then SvMotion to keep the disk format. If using Linux, use zerofree to reclaim the space and then SvMotion to another datastore with another block size keeping the disk format
 
 **Solution 2:**
 Use VMware Converter and P2V the VM. Ensure you use the thin disk.
