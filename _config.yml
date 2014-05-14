@@ -1,21 +1,21 @@
 # This is the default format. 
 # For more see: http://jekyllrb.com/docs/permalinks/
-permalink: /:year/:month/:title 
+permalink: /:categories/:year/:month/:day/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+markdown: kramdown
 pygments: true
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
 title : VirtuallyHyper
-tagline: A Virtualization Blog
+tagline: The Virtualization Blog
 author :
-  name : VirtuallyHyper
-  email : contact@virtuallyhyper.com
-  github : username
-  twitter : virtuallyhyper
-  feedburner : feedname
+  name : Karim Elatov
+  email : ela.tov.gmail.com
+  github : elatov@gmail.com
+  twitter : username
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -25,7 +25,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://beta.virtuallyhyper.com
+production_url : http://elatov.github.io
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -54,7 +54,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  # BASE_PATH : http://blog.joechan.us/vh2-jekyll
+  BASE_PATH : false
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
@@ -79,19 +79,19 @@ JB :
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
   #
-  comments :
-    provider : disqus
-    disqus :
-      short_name : jekyllbootstrap
-    livefyre :
-      site_id : 123
-    intensedebate :
-      account : 123abc
-    facebook :
-      appid : 123
-      num_posts: 5
-      width: 580
-      colorscheme: light
+#  comments :
+#    provider : disqus
+#    disqus :
+#      short_name : jekyllbootstrap
+#    livefyre :
+#      site_id : 123
+#    intensedebate :
+#      account : 123abc
+#    facebook :
+#      appid : 123
+#      num_posts: 5
+#      width: 580
+#      colorscheme: light
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -100,8 +100,7 @@ JB :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-7265705-7'
-        domain: 'virtuallyhyper.com'
+        tracking_id : 'UA-123-12'
     getclicky :
       site_id : 
     mixpanel :
@@ -128,35 +127,7 @@ JB :
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
-  
-# VH settings
-paginate: 10
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
-  
-authors:
-  joe:
-    name: 'Joe Chan'
-    display_name: Joe
-    gravatar: a
-    email: a
-    web: a
-    twitter: a
-    github: a
-  jarret:
-    name: 'Jarret Lavallee'
-    display_name: Jarret
-    gravatar: b
-    email: b
-    web: b
-    twitter: b
-    github: b
-  karim:
-    name: 'Karim Elatov'
-    display_name: Karim
-    gravatar: c
-    email: c
-    web: c
-    twitter: c
-    github: c
+search :
+  provider : gcse
+  gcse :
+    cx : 001912851300668510249:qatni_pvtqg
