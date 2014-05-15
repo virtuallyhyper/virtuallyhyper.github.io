@@ -1,543 +1,216 @@
 ---
-author: karim
-comments: true
-date: 2013-05-22 21:56:44+00:00
+title: Set up simpleSAMLphp as an IdP to be Used in an SP-Initiated SSO with Google Apps
+author: Karim Elatov
 layout: post
-slug: set-up-simplesamlphp-as-an-idp-to-be-used-in-an-sp-initiated-sso-with-google-apps
-title: Set up simpleSAMLphp as an IdP to be Used in an SP-Initiated SSO with Google
-  Apps
-wordpress_id: 8581
+permalink: /2013/05/set-up-simplesamlphp-as-an-idp-to-be-used-in-an-sp-initiated-sso-with-google-apps/
+dsq_thread_id:
+  - 1405434307
 categories:
-- Home Lab
-following_users:
-- jarret
-- kelatov
+  - Home Lab
 tags:
-- SAML
-- SimpleSAMLPHP
-- SSO
+  - SAML
+  - SimpleSAMLPHP
+  - SSO
 ---
-
 ## SP-Initiated SAML SSO
 
+Hopefully the title of the post isn&#8217;t too confusing. To clear up what I am trying to achieve let&#8217;s check out &#8220;<a href="http://saml.xml.org/wiki/sp-initiated-single-sign-on-postartifact-bindings" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://saml.xml.org/wiki/sp-initiated-single-sign-on-postartifact-bindings']);">SP-initiated Single Sign-On POST/Artifact Bindings</a>&#8220;. Here is a pretty concise description of what SP (Service Provider) Initiated SSO (Single Sign On) means:
 
-
-
-
-Hopefully the title of the post isn't too confusing. To clear up what I am trying to achieve let's check out "[SP-initiated Single Sign-On POST/Artifact Bindings](http://saml.xml.org/wiki/sp-initiated-single-sign-on-postartifact-bindings)". Here is a pretty concise description of what SP (Service Provider) Initiated SSO (Single Sign On) means:
-
-
-
-
-
-> 
-  
-> 
-> This example describes an SP-initiated SSO exchange. In such an exchange, the user attempts to access a resource on the SP, sp.example.com. However they do not have a current logon session on this site and their federated identity is managed by their IdP, idp.example.org. They are sent to the IdP to log on and the IdP provides a SAML web SSO assertion for the user's federated identity back to the SP.
-> 
-> 
-
-
-
-
-
+> This example describes an SP-initiated SSO exchange. In such an exchange, the user attempts to access a resource on the SP, sp.example.com. However they do not have a current logon session on this site and their federated identity is managed by their IdP, idp.example.org. They are sent to the IdP to log on and the IdP provides a SAML web SSO assertion for the user&#8217;s federated identity back to the SP.
 
 From the same site here is a step by step process:
 
-
-
-
-
+> 1.  The user attempts to access a resource on **sp.example.com**. The user does not have a valid logon session (i.e. security context) on this site. The SP saves the requested resource URL in local state information that can be saved across the web SSO exchange.
 > 
-  
-> 
-> 
-  
->   1. The user attempts to access a resource on **sp.example.com**. The user does not have a valid logon session (i.e. security context) on this site. The SP saves the requested resource URL in local state information that can be saved across the web SSO exchange.
-> 
-> 
-  
->   2. The SP sends an HTML form back to the browser in the HTTP response (**HTTP status 200**). The HTML FORM contains a SAML `<authnrequest>` message encoded as the value of a hidden form control named SAMLRequest.
-> 
-> 
-
-
+> 2.  The SP sends an HTML form back to the browser in the HTTP response (**HTTP status 200**). The HTML FORM contains a SAML `<authnrequest>` message encoded as the value of a hidden form control named SAMLRequest.
 >     
-
-```
->     `<form method="post" action="https://idp.example.org/SAML2/SSO/POST" ...>`
->     `<input type="hidden" name="SAMLRequest" value="request" />`
->     `<input type="hidden" name="RelayState" value="token" />...`
->     `<input type="submit" value="Submit" />`
->     `</form>` 
+>         `<form method="post" action="https://idp.example.org/SAML2/SSO/POST" ...>`
+>         `<input type="hidden" name="SAMLRequest" value="request" />`
+>         `<input type="hidden" name="RelayState" value="token" />...`
+>         `<input type="submit" value="Submit" />`
+>         `</form>` 
+>         
 >     
-```
-
-> 
-> 
-  
-  
-> 
-> The **RelayState** token is an opaque reference to state information maintained at the service provider. (The **RelayState** mechanism can leak details of the user's activities at the SP to the IdP and so the SP should take care in its implementation to protect the user's privacy.) The value of the SAMLRequest parameter is the _base64_ encoding of the following `<samlp:authnrequest>` element:
-> 
-> 
-
-
+>     The **RelayState** token is an opaque reference to state information maintained at the service provider. (The **RelayState** mechanism can leak details of the user&#8217;s activities at the SP to the IdP and so the SP should take care in its implementation to protect the user&#8217;s privacy.) The value of the SAMLRequest parameter is the *base64* encoding of the following `<samlp:authnrequest>` element:
 >     
-
-```
->     `</samlp:authnrequest><samlp:authnrequest `
->     `xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
->     `xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"`
->     `ID="identifier_1"`
->     `Version="2.0"`
->     `IssueInstant="2004-12-05T09:21:59Z"`
->     `AssertionConsumerServiceIndex="1">`
->     `<saml:issuer>https://sp.example.com/SAML2</saml:issuer>`
->     `<samlp:nameidpolicy AllowCreate="true"`
->     `Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"/>`
->     `</samlp:nameidpolicy></samlp:authnrequest>` 
+>         `</samlp:authnrequest><samlp:authnrequest `
+>         `xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
+>         `xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"`
+>         `ID="identifier_1"`
+>         `Version="2.0"`
+>         `IssueInstant="2004-12-05T09:21:59Z"`
+>         `AssertionConsumerServiceIndex="1">`
+>         `<saml:issuer>https://sp.example.com/SAML2</saml:issuer>`
+>         `<samlp:nameidpolicy AllowCreate="true"`
+>         `Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"/>`
+>         `</samlp:nameidpolicy></samlp:authnrequest>` 
+>         
+> 
+> 3.  For ease-of-use purposes, the HTML FORM typically will be accompanied by script code that will automatically post the form to the destination site (which is the IdP in this case). The browser, due either to a user action or execution of an “auto-submit” script, issues an HTTP POST request to send the form to the identity provider&#8217;s Single Sign-On Service.
 >     
-```
-
+>         POST /SAML2/SSO/POST HTTP/1.1
+>         Host: idp.example.org
+>         Content-Type: application/x-www-form-urlencoded
+>         Content-Length: nnn
+>         SAMLRequest=request&RelayState=token
+>         
 > 
+> 4.  The Single Sign-On Service determines whether the user has an existing logon security context at the identity provider that meets the default or requested authentication policy requirements. If not, the IdP interacts with the browser to challenge the user to provide valid credentials.
 > 
-  
->   3. For ease-of-use purposes, the HTML FORM typically will be accompanied by script code that will automatically post the form to the destination site (which is the IdP in this case). The browser, due either to a user action or execution of an “auto-submit” script, issues an HTTP POST request to send the form to the identity provider's Single Sign-On Service.
+> 5.  The user provides valid credentials and a local logon security context is created for the user at the IdP.
 > 
+> 6.  The IdP Single Sign-On Service issues a SAML assertion representing the user&#8217;s logon security context and places the assertion within a SAML message. Since in this example, the HTTP Artifact binding will be used to deliver the SAML Response message, it is not mandated that the assertion be digitally signed. The IdP creates an artifact containing the source ID for the **idp.example.org** site and a reference to the message (the MessageHandle). The artifact is delivered to the SP through a browser redirect.
 > 
-
-
+> 7.  The SP&#8217;s **Assertion Consumer Service** now sends a SAML message containing the artifact to the IdP&#8217;s **Artifact Resolution Service** endpoint. This exchange is performed using a synchronous SOAP message exchange.
 >     
-
-```
->     POST /SAML2/SSO/POST HTTP/1.1
->     Host: idp.example.org
->     Content-Type: application/x-www-form-urlencoded
->     Content-Length: nnn
->     SAMLRequest=request&RelayState=token
+>         `<samlp:artifactresolve xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
+>         `xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"`
+>         `ID="identifier_2"`
+>         `Version="2.0"`
+>         `IssueInstant="2004-12-05T09:22:04Z"`
+>         `Destination="https://idp.example.org/SAML2/ArtifactResolution">`
+>         `<saml:issuer>https://sp.example.com/SAML2</saml:issuer>`
+>         `<!-- an ArtifactResolve message SHOULD be signed -->`
+>         `<ds:signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">...</ds:signature>`
+>         `<samlp:artifact>artifact</samlp:artifact>`
+>         `</samlp:artifactresolve>`
+>         
+> 
+> 8.  The IdP&#8217;s **Artifact Resolution Service** extracts the MessageHandle from the artifact and locates the original SAML `<response>` message associated with it. This `Response` is then placed inside a SAML `<artifactresponse>` message, which is returned to the SP over the SOAP channel.
 >     
-```
-
-> 
-> 
-  
->   4. The Single Sign-On Service determines whether the user has an existing logon security context at the identity provider that meets the default or requested authentication policy requirements. If not, the IdP interacts with the browser to challenge the user to provide valid credentials.
-> 
-> 
-  
->   5. The user provides valid credentials and a local logon security context is created for the user at the IdP.
-> 
-> 
-  
->   6. The IdP Single Sign-On Service issues a SAML assertion representing the user's logon security context and places the assertion within a SAML message. Since in this example, the HTTP Artifact binding will be used to deliver the SAML Response message, it is not mandated that the assertion be digitally signed. The IdP creates an artifact containing the source ID for the **idp.example.org** site and a reference to the message (the MessageHandle). The artifact is delivered to the SP through a browser redirect.
-> 
-> 
-  
->   7. The SP's **Assertion Consumer Service** now sends a SAML message containing the artifact to the IdP's **Artifact Resolution Service** endpoint. This exchange is performed using a synchronous SOAP message exchange.
-> 
-> 
-
-
+>         `<samlp:artifactresponse `
+>         `xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
+>         `ID="identifier_3"`
+>         `InResponseTo="identifier_2"`
+>         `Version="2.0"`
+>         `IssueInstant="2004-12-05T09:22:05Z">`
+>         `<!-- an ArtifactResponse message SHOULD be signed -->`
+>         `<ds:signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">...</ds:signature>`
+>         `<samlp:status>`
+>         `<samlp:statuscode `
+>         `Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>`
+>         `</samlp:statuscode></samlp:status>`
+>         `<samlp:response>`
+>         `.....`
+>         `</samlp:response>`
+>         `</samlp:artifactresponse>`
+>         
 >     
-
-```
->     `<samlp:artifactresolve xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
->     `xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"`
->     `ID="identifier_2"`
->     `Version="2.0"`
->     `IssueInstant="2004-12-05T09:22:04Z"`
->     `Destination="https://idp.example.org/SAML2/ArtifactResolution">`
->     `<saml:issuer>https://sp.example.com/SAML2</saml:issuer>`
->     `<!-- an ArtifactResolve message SHOULD be signed -->`
->     `<ds:signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">...</ds:signature>`
->     `<samlp:artifact>artifact</samlp:artifact>`
->     `</samlp:artifactresolve>`
->     
-```
-
+>     The SP extracts and processes the message and then processes the embedded assertion in order to create a local logon security context for the user at the SP. Once this is completed, the SP retrieves the local state information indicated by the **RelayState** data to recall the originally-requested resource URL. It then sends an HTTP redirect response to the browser directing it to access the originally requested resource.
 > 
-> 
-  
->   8. The IdP's **Artifact Resolution Service** extracts the MessageHandle from the artifact and locates the original SAML `<response>` message associated with it. This `Response` is then placed inside a SAML `<artifactresponse>` message, which is returned to the SP over the SOAP channel.
-> 
-> 
+> 9.  The SP makes an access check is made to establish whether the user has the correct authorization to access the resource. If the access check passes, the resource is then returned to the browser.
 
+In our particular example simpleSAMLphp will be the IdP (Identity Provider) and Google Apps will be the SP (Service Provider). Google Apps supports SSO with SAML and that is why I am using it in this example. Actually here is the same process described on their site: &#8220;<a href="https://developers.google.com/google-apps/sso/saml_reference_implementation" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://developers.google.com/google-apps/sso/saml_reference_implementation']);">SAML Single Sign-On (SSO) Service for Google Apps</a>&#8220;. For that site here is a diagram of the process:
 
->     
-
-```
->     `<samlp:artifactresponse `
->     `xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`
->     `ID="identifier_3"`
->     `InResponseTo="identifier_2"`
->     `Version="2.0"`
->     `IssueInstant="2004-12-05T09:22:05Z">`
->     `<!-- an ArtifactResponse message SHOULD be signed -->`
->     `<ds:signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">...</ds:signature>`
->     `<samlp:status>`
->     `<samlp:statuscode `
->     `Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>`
->     `</samlp:statuscode></samlp:status>`
->     `<samlp:response>`
->     `.....`
->     `</samlp:response>`
->     `</samlp:artifactresponse>`
->     
-```
-
-> 
-> 
-  
-  
-> 
-> The SP extracts and processes the message and then processes the embedded assertion in order to create a local logon security context for the user at the SP. Once this is completed, the SP retrieves the local state information indicated by the **RelayState** data to recall the originally-requested resource URL. It then sends an HTTP redirect response to the browser directing it to access the originally requested resource.
-> 
-> 
-  
->   9. The SP makes an access check is made to establish whether the user has the correct authorization to access the resource. If the access check passes, the resource is then returned to the browser.
-> 
-> 
-  
-
-
-
-
-
-
-In our particular example simpleSAMLphp will be the IdP (Identity Provider) and Google Apps will be the SP (Service Provider). Google Apps supports SSO with SAML and that is why I am using it in this example. Actually here is the same process described on their site: "[SAML Single Sign-On (SSO) Service for Google Apps](https://developers.google.com/google-apps/sso/saml_reference_implementation)". For that site here is a diagram of the process:
-
-
-
-
-
-[![gapps_sso_saml](http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_saml.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_saml.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_saml.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_saml.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_saml.png" alt="gapps sso saml Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="696" height="630" class="alignnone size-full wp-image-8598" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 After we set this up, we will take a look at the HTTP interaction in our Browser.
 
-
-
-
-
 ## Install SimpleSAMLPHP on Ubuntu
-
-
-
-
 
 I used Ubuntu for my setup, so a simple:
 
-
-
-
-    
-
-```
     apt-get install simplesamlphp
     
-```
-
-
-
-
-
 
 Took care of the install. The install creates an Apache config:
 
-
-
-
-    
-
-```
     elatov@awsub:~$ head -3 /etc/simplesamlphp/apache.conf 
     # simpleSAMLphp example Apache config snippet.
     # To include this in your Apache configuration:
     #   ln -s /etc/simplesamlphp/apache.conf /etc/apache2/conf.d/simplesamlphp.conf
     
-```
-
-
-
-
-
 
 To enable the config, just follow the above instructions:
 
-
-
-
-    
-
-```
     elatov@awsub:~$ sudo ln -s /etc/simplesamlphp/apache.conf /etc/apache2/conf.d/simplesamlphp.conf
     
-```
-
-
-
-
-
 
 For good measure, make sure the Apache configuration is okay:
 
-
-
-
-    
-
-```
     elatov@awsub:~$ sudo apache2ctl -t
     Syntax OK
     
-```
-
-
-
-
-
 
 Then go ahead and restart the Apache service:
 
-
-
-
-    
-
-```
     elatov@awsub:~$ sudo service apache2 restart
      * Restarting web server apache2                                                 ... waiting                                                             [ OK ]
     
-```
-
-
-
-
-
 
 At this point you can check to see if the SimpleSAMLPHP is working by visiting **http://localhost/simplesamlphp**. You should see the following:
 
-
-
-
-
-[![simplesamlphp-install-page](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-install-page.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-install-page.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-install-page.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-install-page.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-install-page.png" alt="simplesamlphp install page Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="943" height="458" class="alignnone size-full wp-image-8600" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 ## Configure SimpleSAMLPHP as an IdP (Identity Provider)
 
-
-
-
-
-Luckily there is a pretty good guide from SimpleSAMLPHP: [Setting up a simpleSAMLphp SAML 2.0 IdP to use with Google Apps for Education](http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps). So let's go through the guide.
-
-
-
-
+Luckily there is a pretty good guide from SimpleSAMLPHP: <a href="http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps']);">Setting up a simpleSAMLphp SAML 2.0 IdP to use with Google Apps for Education</a>. So let&#8217;s go through the guide.
 
 ### Enabling the Identity Provider functionality in SimpleSAMLPHP
 
-
-
-
-
 Edit the **/etc/simplesamlphp/config.php** file and make the following changes:
 
-
-
-
-    
-
-```
     'enable.saml20-idp' => true,
     'enable.shib13-idp' => false,
     
-```
-
-
-
-
-
 
 ### Setting up an SSL signing certificate
 
-
-
-
-
 First generate the certificate with the following commands:
 
-
-
-
-    
-
-```
     openssl genrsa -des3 -out googleappsidp.key 1024 
     openssl rsa -in googleappsidp.key -out googleappsidp.pem
     openssl req -new -key googleappsidp.key -out googleappsidp.csr
     openssl x509 -req -days 9999 -in googleappsidp.csr -signkey googleappsidp.key -out googleappsidp.crt
     
-```
 
-
-
-
-
-
-**Note:** simpleSAMLphp will only work with _RSA_ and not _DSA_ certificates.
-
-
-
-
+**Note:** simpleSAMLphp will only work with *RSA* and not *DSA* certificates.
 
 Fill out the request as you desire. Lastly go ahead and copy the private key (without the password) and the certificate to the SSL Certificate database/directory. For Ubuntu this is under **/etc/ssl/certs** and **/etc/ssl/private**. I will add both under **/etc/ssl/certs**, this way SimpleSAMLPHP will be able read them:
 
-
-
-
-    
-
-```
     elatov@awsub:~$ sudo cp googleappsidp.crt /etc/ssl/certs/.
     elatov@awsub:~$ sudo cp googleappsidp.pem /etc/ssl/certs/.
     
-```
-
-
-
-
-
 
 ### Configuring the authentication source in SimpleSAMLPHP
 
+SimpleSAMLPHP can connect to an *LDAP* server for an authentication source. I didn&#8217;t want to setup an LDAP server on the same machine, so I just used the **exampleauth:UserPass** authentication source provided by SimpleSAMLPHP. First let&#8217;s enable the **exampleauth** module, this is done by running the following:
 
-
-
-
-SimpleSAMLPHP can connect to an _LDAP_ server for an authentication source. I didn't want to setup an LDAP server on the same machine, so I just used the **exampleauth:UserPass** authentication source provided by SimpleSAMLPHP. First let's enable the **exampleauth** module, this is done by running the following:
-
-
-
-
-    
-
-```
     elatov@awsub:~$ sudo touch /usr/share/simplesamlphp/modules/exampleauth/enable
     
-```
-
-
-
-
-
 
 Next, edit the **/etc/simplesamlphp/authsources.php** file and add the following section under the **example-userpass** section:
 
-
-
-
-    
-
-```
     'example-userpass' => array( 'exampleauth:UserPass',
                     'test:password' => array( 'uid' => array('test'),),),
     
-```
 
+That will add a user called *test* with a password of **password**. After the user is logged the attribute of **uid** will be returned (in our case it&#8217;s the same as the username: **test**). This has to match the username that is created in Google apps.
 
+### Testing *Example-Userpass* Authentication Source
 
+Now that we added a **test** user, let&#8217;s make sure we can login with the **test** credentials. Point your browser to the SimpleSAMLPHP install (in my case it was **http://awsub.dnsd.me/simplesamlphp**) and then click on the &#8220;Authentication&#8221; tab. You will see the following:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-auth-tab.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-auth-tab.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-auth-tab.png" alt="simplesaml php auth tab Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="939" height="305" class="alignnone size-full wp-image-8605" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+Then click on &#8220;Test configured authentication sources&#8221; and you will see the following:
 
-That will add a user called _test_ with a password of **password**. After the user is logged the attribute of **uid** will be returned (in our case it's the same as the username: **test**). This has to match the username that is created in Google apps.
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlplhp-test_auth-sources.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlplhp-test_auth-sources.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlplhp-test_auth-sources.png" alt="simplesamlplhp test auth sources Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="939" height="302" class="alignnone size-full wp-image-8606" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+Then click on &#8220;example-userpass&#8221; and you will see the following:
 
-
-
-
-### Testing _Example-Userpass_ Authentication Source
-
-
-
-
-
-Now that we added a **test** user, let's make sure we can login with the **test** credentials. Point your browser to the SimpleSAMLPHP install (in my case it was **http://awsub.dnsd.me/simplesamlphp**) and then click on the "Authentication" tab. You will see the following:
-
-
-
-
-
-[![simplesaml-php-auth-tab](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-auth-tab.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-auth-tab.png)
-
-
-
-
-
-Then click on "Test configured authentication sources" and you will see the following:
-
-
-
-
-
-[![simplesamlplhp-test_auth-sources](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlplhp-test_auth-sources.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlplhp-test_auth-sources.png)
-
-
-
-
-
-Then click on "example-userpass" and you will see the following:
-
-
-
-
-
-[![simplesamlphp-enter-user-and-pass](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-enter-user-and-pass.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-enter-user-and-pass.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-enter-user-and-pass.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-enter-user-and-pass.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-enter-user-and-pass.png" alt="simplesamlphp enter user and pass Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="938" height="425" class="alignnone size-full wp-image-8607" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 Then enter your credentials and if it successfully authenticates, you will see the following:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-logged-in.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-logged-in.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-logged-in.png" alt="simplesamlphp logged in Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="941" height="530" class="alignnone size-full wp-image-8608" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
-
-
-
-[![simplesamlphp-logged-in](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-logged-in.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-logged-in.png)
-
-
-
-
-
-That looks good and it's returning the appropriate attribute.
-
-
-
-
+That looks good and it&#8217;s returning the appropriate attribute.
 
 ### Configuring SAML 2.0 IdP Hosted Metadata
 
+So we already enabled SimpleSAMLPHP to act as an IdP, now let&#8217;s configure it. Edit the **/etc/simplesamlphp/metadata/saml20-idp-hosted.php** file and add the following to the file:
 
-
-
-
-So we already enabled SimpleSAMLPHP to act as an IdP, now let's configure it. Edit the **/etc/simplesamlphp/metadata/saml20-idp-hosted.php** file and add the following to the file:
-
-
-
-
-    
-
-```
     elatov@awsub:~$ cat /etc/simplesamlphp/metadata/saml20-idp-hosted.php
     < ?php
     $metadata['__DYNAMIC:1__'] = array(
@@ -551,27 +224,11 @@ So we already enabled SimpleSAMLPHP to act as an IdP, now let's configure it. Ed
         'auth' => 'example-userpass',
     );
     
-```
-
-
-
-
-
 
 ### Configuring SAML 2.0 SP Remote Metadata
 
+Now let&#8217;s configure the SP (Service Provider) that we are going trust and authenticate for in our setup ( in our case it&#8217;s Google Apps). Edit the /**etc/simplesamlphp/metadata/saml20-sp-remote.php** file and add the following to it:
 
-
-
-
-Now let's configure the SP (Service Provider) that we are going trust and authenticate for in our setup ( in our case it's Google Apps). Edit the /**etc/simplesamlphp/metadata/saml20-sp-remote.php** file and add the following to it:
-
-
-
-
-    
-
-```
     elatov@awsub:~$ cat /etc/simplesamlphp/metadata/saml20-sp-remote.php
     < ?php
     $metadata['google.com'] = array(
@@ -581,306 +238,103 @@ Now let's configure the SP (Service Provider) that we are going trust and authen
         'simplesaml.attributes'      => false
     );
     
-```
-
-
-
-
-
 
 Populate the **AssertionConsumerService** appropriately, change the domain to match the domain of your Google Apps (in my case it was **moxz.mine.nu**).
 
-
-
-
-
 ## Enable SSO for Google Apps
 
-
-
-
-
-These instructions are also laid out in the same SimpleSAMLPHP [page](http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps).
-
-
-
-
+These instructions are also laid out in the same SimpleSAMLPHP <a href="http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://simplesamlphp.org/docs/1.5/simplesamlphp-googleapps']);">page</a>.
 
 ### Login to your Google Apps Admin Portal/Dashboard
 
+Go to your domain&#8217;s Google Apps page, mine is **http://www.google.com/a/moxz.nine.nu** and you will see something like this:
 
-
-
-
-Go to your domain's Google Apps page, mine is **http://www.google.com/a/moxz.nine.nu** and you will see something like this:
-
-
-
-
-
-[![moxz_mine_nu_gapps](http://virtuallyhyper.com/wp-content/uploads/2013/04/moxz_mine_nu_gapps.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/moxz_mine_nu_gapps.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/moxz_mine_nu_gapps.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/moxz_mine_nu_gapps.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/moxz_mine_nu_gapps.png" alt="moxz mine nu gapps Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="935" height="355" class="alignnone size-full wp-image-8616" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 After you login as the Administrator you will see the following:
 
-
-
-
-
-[![google_apps_dashboard](http://virtuallyhyper.com/wp-content/uploads/2013/04/google_apps_dashboard.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/google_apps_dashboard.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/google_apps_dashboard.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/google_apps_dashboard.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/google_apps_dashboard.png" alt="google apps dashboard Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1008" height="639" class="alignnone size-full wp-image-8617" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 ### Configure SSO For Google Apps
 
+Then click on the &#8220;Advanced tools&#8221; tab:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/adv-tools-tab-gapps.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/adv-tools-tab-gapps.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/adv-tools-tab-gapps.png" alt="adv tools tab gapps Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1415" height="548" class="alignnone size-full wp-image-8618" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+Then click on &#8220;Set up single sign-on (SSO)&#8221; and fill out all the necessary information:
 
-
-Then click on the "Advanced tools" tab:
-
-
-
-
-
-[![adv-tools-tab-gapps](http://virtuallyhyper.com/wp-content/uploads/2013/04/adv-tools-tab-gapps.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/adv-tools-tab-gapps.png)
-
-
-
-
-
-Then click on "Set up single sign-on (SSO)" and fill out all the necessary information:
-
-
-
-
-
-[![gapps_sso_settings](http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_settings.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_settings.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_settings.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_settings.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/gapps_sso_settings.png" alt="gapps sso settings Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1238" height="366" class="alignnone size-full wp-image-8619" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 Here are all the values:
 
+*   **Sign-in page URL**
+    
+    *   http://awsub.dnsd.me/simplesamlphp/saml2/idp/SSOService.php
 
+*   **Sign-out page URL**
+    
+    *   http://awsub.dnsd.me/simplesamlphp/saml2/idp/initSLO.php?RelayState=/simplesamlphp/logout.php
 
+*   **Change password URL**
+    
+    *   http://awsub.dnsd.me
 
-
-
-
-  * **Sign-in page URL**
-
-
-
-
-
-    * http://awsub.dnsd.me/simplesamlphp/saml2/idp/SSOService.php
-
-
-
-
-  * **Sign-out page URL**
-
-
-
-
-
-    * http://awsub.dnsd.me/simplesamlphp/saml2/idp/initSLO.php?RelayState=/simplesamlphp/logout.php
-
-
-
-
-  * **Change password URL**
-
-
-
-
-
-    * http://awsub.dnsd.me
-
-
-
-
-  * **Verification certificate**
-
-
-
-
-
-    * googleappsidp.crt
-
-
-
-
-
-
+*   **Verification certificate**
+    
+    *   googleappsidp.crt
 
 ### Add a User to your Google Apps Domain
 
+Click on the &#8220;Users&#8221; tab in the Google Apps Dashboard and then click on &#8220;Create User&#8221;:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/testuser_gapps.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/testuser_gapps.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/testuser_gapps.png" alt="testuser gapps Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="353" height="204" class="alignnone size-full wp-image-8633" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+After it&#8217;s created you will see your *test* user. Make sure the **username** for the user matches the **uid** that you created in SimpleSAMLPHP in the *Example-Userpass* Authentication Source (in my case it was **test**). Here is my **test** user in Google Apps:
 
-
-Click on the "Users" tab in the Google Apps Dashboard and then click on "Create User":
-
-
-
-
-
-[![testuser_gapps](http://virtuallyhyper.com/wp-content/uploads/2013/04/testuser_gapps.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/testuser_gapps.png)
-
-
-
-
-
-After it's created you will see your _test_ user. Make sure the **username** for the user matches the **uid** that you created in SimpleSAMLPHP in the _Example-Userpass_ Authentication Source (in my case it was **test**). Here is my **test** user in Google Apps:
-
-
-
-
-
-[![users-tab-gapps](http://virtuallyhyper.com/wp-content/uploads/2013/04/users-tab-gapps.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/users-tab-gapps.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/users-tab-gapps.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/users-tab-gapps.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/users-tab-gapps.png" alt="users tab gapps Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1080" height="262" class="alignnone size-full wp-image-8632" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 ## Test out SSO
 
-
-
-
-
 Go to **gmail.com** and try to login to your domain with the test user:
 
-
-
-
-
-[![gmail_login](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_login.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_login.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_login.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_login.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_login.png" alt="gmail login Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1045" height="374" class="alignnone size-full wp-image-8634" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 After you try to login, you see the following message:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_sso_turned_on.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_sso_turned_on.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_sso_turned_on.png" alt="gmail sso turned on Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="369" height="368" class="alignnone size-full wp-image-8635" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+This is the SP telling us to go to the IdP to get authenticated. As soon as you hit &#8220;Sign In&#8221;, you will see the following:
 
-
-
-[![gmail_sso_turned_on](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_sso_turned_on.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail_sso_turned_on.png)
-
-
-
-
-
-This is the SP telling us to go to the IdP to get authenticated. As soon as you hit "Sign In", you will see the following:
-
-
-
-
-
-[![simplesamlphp-authenticate](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-authenticate.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-authenticate.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-authenticate.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-authenticate.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesamlphp-authenticate.png" alt="simplesamlphp authenticate Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="901" height="356" class="alignnone size-full wp-image-8636" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 After you authenticate it will redirect you back to Gmail:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/loggedin_gmail_test.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/loggedin_gmail_test.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/loggedin_gmail_test.png" alt="loggedin gmail test Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="1442" height="323" class="alignnone size-full wp-image-8637" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+Another note, if you go directly to **mail.google.com/a/moxz.mine.nu** it will redirect you directly to the IdP. If you sign out of *gmail*:
 
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail-signout.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail-signout.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail-signout.png" alt="gmail signout Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="298" height="261" class="alignnone size-full wp-image-8638" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
+You will be take to the IdP&#8217;s log-out page:
 
-[![loggedin_gmail_test](http://virtuallyhyper.com/wp-content/uploads/2013/04/loggedin_gmail_test.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/loggedin_gmail_test.png)
-
-
-
-
-
-Another note, if you go directly to **mail.google.com/a/moxz.mine.nu** it will redirect you directly to the IdP. If you sign out of _gmail_:
-
-
-
-
-
-[![gmail-signout](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail-signout.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/gmail-signout.png)
-
-
-
-
-
-You will be take to the IdP's log-out page:
-
-
-
-
-
-[![simplesaml-php-loggedout](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-loggedout.png)](http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-loggedout.png)
-
-
-
-
+<a href="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-loggedout.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-loggedout.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2013/04/simplesaml-php-loggedout.png" alt="simplesaml php loggedout Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" width="939" height="296" class="alignnone size-full wp-image-8639" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /></a>
 
 And everything worked out okay.
 
-
-
-
-
 ## Checking out HTTP Headers in an SP-Initiated SAML SSO Exchange
-
-
-
-
 
 There are many tools out there that can help with this:
 
+*   <a href="https://addons.mozilla.org/en-us/firefox/addon/httpfox/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://addons.mozilla.org/en-us/firefox/addon/httpfox/']);">HTTPFox</a> 
+*   <a href="http://www.charlesproxy.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.charlesproxy.com/']);">Charles Proxy</a> 
+*   <a href="https://developers.google.com/chrome-developer-tools/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://developers.google.com/chrome-developer-tools/']);">Chrome Developer Tools</a> 
+*   <a href="http://fiddler2.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://fiddler2.com/']);">Diddler</a> 
+*   <a href="https://addons.mozilla.org/en-us/firefox/addon/live-http-headers/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://addons.mozilla.org/en-us/firefox/addon/live-http-headers/']);">Live HTTP Headers</a>
 
+I prefer Charles Proxy because it&#8217;s a stand alone application. You point your browser to proxy all of it&#8217;s traffic through Charles and you can see everything. While the other tools, attach themselves to the Browser and show you the traffic. For ease of use, I will use *Live HTTP Headers* cause it easy to copy Header information from it <img src="http://virtuallyhyper.com/wp-includes/images/smilies/icon_smile.gif" alt="icon smile Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" class="wp-smiley" title="Set up simpleSAMLphp as an IdP to be Used in an SP Initiated SSO with Google Apps" /> 
 
+Here is what I saw after I hit &#8220;Sign In&#8221; from gmail:
 
-
-
-
-  * [HTTPFox](https://addons.mozilla.org/en-us/firefox/addon/httpfox/)
-
-
-  * [Charles Proxy](http://www.charlesproxy.com/)
-
-
-  * [Chrome Developer Tools](https://developers.google.com/chrome-developer-tools/)
-
-
-  * [Diddler](http://fiddler2.com/)
-
-
-  * [Live HTTP Headers](https://addons.mozilla.org/en-us/firefox/addon/live-http-headers/)
-
-
-
-
-
-I prefer Charles Proxy because it's a stand alone application. You point your browser to proxy all of it's traffic through Charles and you can see everything. While the other tools, attach themselves to the Browser and show you the traffic. For ease of use, I will use _Live HTTP Headers_ cause it easy to copy Header information from it :)
-
-
-
-
-
-Here is what I saw after I hit "Sign In" from gmail:
-
-
-
-
-    
-
-```
     https://accounts.google.com/ServiceLoginAuth
     
     POST /ServiceLoginAuth HTTP/1.1
@@ -905,57 +359,21 @@ Here is what I saw after I hit "Sign In" from gmail:
     Location: http://awsub.dnsd.me/simplesamlphp/saml2/idp/SSOService.php?SAMLRequest=fVLJTsMwEL0j8Q%2BR71lBAllNUAEhKrFENHDg5iaTxJU9Dh6nBb4eNwUBB7g%2Bv3nLeGZnr1oFG7AkDeYsjRIWANamkdjl7LG6Ck%2FZWXF4MCOh1cDno%2BvxAV5GIBf4SSQ%2BPeRstMiNIEkchQbirubL%2Be0Nz6KED9Y4UxvFgsVlztZrIUWnBlC9ggZF1%2Fd6aA32K0SB637VaqNRefbTV6xsF2tBNMICyQl0HkrSozA5DrOTKkt5esSz5JkF5afTucR9g%2F9irfYk4tdVVYbl%2FbKaBDayAXvn2TnrjOkURLXRO%2FtSEMmNh1uhCFgwJwLrfMALgzRqsEuwG1nD48NNznrnBuJxvN1uo2%2BZWMTavL5HWiJEOMaiJlZMu%2BVTPftjqf%2BHF1%2FmrPiWn8U%2FpIrPP9tVWVyWRsn6LZgrZbYXFoTzPZwdfY0rY7Vwf7ulUTohsgnbicpHpAFq2UpoWBAXe9ffx%2BFP5gM%3D&RelayState=https%3A%2F%2Faccounts.google.com%2FCheckCookie%3Fcontinue%3Dhttp%253A%252F%252Fmail.google.com%252Fmail%252F%26service%3Dmail%26ltmpl%3Ddefault
     Server: GSE
     
-```
-
-
-
-
-
 
 This is basically Step 2 and 3 from the above picture. We post to google:
 
-
-
-
-    
-
-```
     https://accounts.google.com/ServiceLoginAuth
     POST /ServiceLoginAuth HTTP/1.1
     
-```
-
-
-
-
-
 
 and that redirects us to the IdP with the SAML request included:
 
-
-
-
-    
-
-```
     HTTP/1.1 302 Moved Temporarily
     Location: http://awsub.dnsd.me/simplesamlphp/saml2/idp/SSOService.php?SAMLRequest=fVLJTsMwEL0j8Q%2BR71lBAllNUAEhKrFENHDg5iaTxJU9Dh6nBb4eNwUBB7g%2Bv3nLeGZnr1oFG7AkDeYsjRIWANamkdjl7LG6Ck%2FZWXF4MCOh1cDno%2BvxAV5GIBf4SSQ%2BPeRstMiNIEkchQbirubL%2Be0Nz6KED9Y4UxvFgsVlztZrIUWnBlC9ggZF1%2Fd6aA32K0SB637VaqNRefbTV6xsF2tBNMICyQl0HkrSozA5DrOTKkt5esSz5JkF5afTucR9g%2F9irfYk4tdVVYbl%2FbKaBDayAXvn2TnrjOkURLXRO%2FtSEMmNh1uhCFgwJwLrfMALgzRqsEuwG1nD48NNznrnBuJxvN1uo2%2BZWMTavL5HWiJEOMaiJlZMu%2BVTPftjqf%2BHF1%2FmrPiWn8U%2FpIrPP9tVWVyWRsn6LZgrZbYXFoTzPZwdfY0rY7Vwf7ulUTohsgnbicpHpAFq2UpoWBAXe9ffx%2BFP5gM%3D&RelayState=https%3A%2F%2Faccounts.google.com%2FCheckCookie%3Fcontinue%3Dhttp%253A%252F%252Fmail.google.com%252Fmail%252F%26service%3Dmail%26ltmpl%3Ddefault
     
-```
 
+Decoding the SAML Request (using this <a href="https://rnd.feide.no/simplesaml/module.php/saml2debug/debug.php" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://rnd.feide.no/simplesaml/module.php/saml2debug/debug.php']);">tool</a>) since it&#8217;s base64 encoded, we get this:
 
-
-
-
-
-Decoding the SAML Request (using this [tool](https://rnd.feide.no/simplesaml/module.php/saml2debug/debug.php)) since it's base64 encoded, we get this:
-
-
-
-
-    
-
-```
     < ?xml version="1.0" encoding="UTF-8"?>
     <samlp:authnrequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" 
     ID="jjaiaglpelhlednaghhmpfonhbnnanjhbfmomnll" 
@@ -970,27 +388,11 @@ Decoding the SAML Request (using this [tool](https://rnd.feide.no/simplesaml/mod
     Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"></samlp:nameidpolicy>
     </samlp:authnrequest>
     
-```
-
-
-
-
-
 
 **Note:** I grabbed the string between **SAMLRequest=** and **&RelayState**
 
-
-
-
-
 From the above we can see the Provider name is **google.com**, the **ACS URL** (Assertion Consumer Service) is **https://www.google.com/a/moxz.mine.nu/acs**, and other variables are defined as well. Then we see the actual data go to the IdP:
 
-
-
-
-    
-
-```
     GET /simplesamlphp/saml2/idp/SSOService.php?SAMLRequest=fVLJTsMwEL0j8Q%2BR7 HTTP/1.1
     Host: awsub.dnsd.me
     User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:20.0) Gecko/20100101 Firefox/20.0
@@ -1015,21 +417,9 @@ From the above we can see the Provider name is **google.com**, the **ACS URL** (
     Connection: Keep-Alive
     Content-Type: text/html
     
-```
-
-
-
-
-
 
 We get a **302 Found** which is good. At this point the IdP takes care of the authentication. Here is login process on the IdP:
 
-
-
-
-    
-
-```
     POST /simplesamlphp/module.php/core/loginuserpass.php? HTTP/1.1
     Host: awsub.dnsd.me
     User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:20.0) Gecko/20100101 Firefox/20.0
@@ -1058,21 +448,9 @@ We get a **302 Found** which is good. At this point the IdP takes care of the au
     Connection: Keep-Alive
     Content-Type: text/html
     
-```
-
-
-
-
-
 
 We ca see our super cool creds (**test/password**) and the **RelayState** is kept so we know which session this authentication process corresponds to. And here is the response that is sent from the IdP to the SP:
 
-
-
-
-    
-
-```
     https://www.google.com/a/moxz.mine.nu/acs
     
     POST /a/moxz.mine.nu/acs HTTP/1.1
@@ -1100,21 +478,9 @@ We ca see our super cool creds (**test/password**) and the **RelayState** is kep
     X-XSS-Protection: 0
     X-Firefox-Spdy: 3
     
-```
-
-
-
-
-
 
 This is basically steps 4-6 from the diagram. Decoding that SAML Response we get the following:
 
-
-
-
-    
-
-```
     <samlp:response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" 
     xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" 
     ID="pfxdaca6004-04a7-f229-78ab-b57fd83e42e5" 
@@ -1171,38 +537,14 @@ This is basically steps 4-6 from the diagram. Decoding that SAML Response we get
     </saml:assertion>
     </samlp:status></samlp:response>
     
-```
-
-
-
-
-
 
 We can see the certificate used for the signature and the signature it self. We also see the expiration dates for the assertion. The most important thing to check for is the following:
 
-
-
-
-    
-
-```
     `Format="urn:oasis:names:tc:SAML:2.0:nameid-format:email">test`
     
-```
-
-
-
-
-
 
 This ensures that this is for the **test** user. And finally Google confirms the SAML Assertion and directs us to the gmail page:
 
-
-
-
-    
-
-```
     https://mail.google.com/mail/?auth=DQAAAIMAAABnua9GG0M
     
     GET /mail/?auth=DQAAAIMAAABnua9GG0MT-tvplNuWWHYhDzdqQujRwZbBajn88VRr9KtXR-oQZDzJQi2t7UH_4KOdZRZ2jpjd-KpqgMG6K-YFN2zDL5z6T_6mAybLzrTeLojLFoawA4j4JEvW0BfVElT26tYAliaLP4imdvRRnb_2lAEopz8bRZ8TQG0xED5mE0Via9PWezMwIoNavsU_DjM HTTP/1.1
@@ -1232,22 +574,25 @@ This ensures that this is for the **test** user. And finally Google confirms the
     X-XSS-Protection: 1; mode=block
     X-Firefox-Spdy: 3
     
-```
-
-
-
-
-
 
 This is steps 7 and 8 from the diagram. Using Cookies and **RelayState** we are forwarded to the appropriate session. I will try to do an IdP (Identity Provider) Initiated SAML SSO Exchange in another post.
 
+<root>
 
+</root></artifactresponse></response></authnrequest>
 
+<div class="SPOSTARBUST-Related-Posts">
+  <H3>
+    Related Posts
+  </H3>
+  
+  <ul class="entry-meta">
+    <li class="SPOSTARBUST-Related-Post">
+      <a title="LemonLDAP-NG With LDAP and SAML Google Apps" href="http://virtuallyhyper.com/2014/02/lemonldap-ng-ldap-saml-google-apps/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/2014/02/lemonldap-ng-ldap-saml-google-apps/']);" rel="bookmark">LemonLDAP-NG With LDAP and SAML Google Apps</a>
+    </li>
+  </ul>
+</div>
 
-
-
-
-
-
-
-
+<p class="wp-flattr-button">
+  <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/05/set-up-simplesamlphp-as-an-idp-to-be-used-in-an-sp-initiated-sso-with-google-apps/" title=" Set up simpleSAMLphp as an IdP to be Used in an SP-Initiated SSO with Google Apps" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:SAML,SimpleSAMLPHP,SSO,blog;button:compact;">I wanted to try out a WebSSO program and I ran into LemonLDAP::NG. The application can handle SAML applications and can also do the regular reverse proxy approach for enabling...</a>
+</p>
