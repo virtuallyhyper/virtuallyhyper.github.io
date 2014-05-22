@@ -8,3 +8,7 @@ Thumbs.db
 
 .rbenv-version
 .rvmrc
+
+# Repo specific Jekyll settings
+CNAME
+_config.yml
