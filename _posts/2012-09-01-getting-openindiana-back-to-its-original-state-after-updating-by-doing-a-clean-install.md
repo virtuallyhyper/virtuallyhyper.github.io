@@ -1,5 +1,5 @@
 ---
-title: 'Getting OpenIndiana Back to it&#8217;s Original State After Updating by Doing a Clean Install'
+title: "Getting OpenIndiana Back to it's Original State After Updating by Doing a Clean Install"
 author: Karim Elatov
 layout: post
 permalink: /2012/09/getting-openindiana-back-to-its-original-state-after-updating-by-doing-a-clean-install/
@@ -30,27 +30,27 @@ tags:
 I decided to update from **oi_151a4** to **oi_151a5**. I tried using **pkg**:
 
     ~# pkg image-update
-    
 
-I followed the instruction laid out in &#8220;<a href="http://wiki.openindiana.org/oi/Upgrading+OpenIndiana" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://wiki.openindiana.org/oi/Upgrading+OpenIndiana']);">Upgrading OpenIndiana</a>&#8220;, but nothing worked. I re-setup my publisher, I even tried different publisher, but it just wouldn&#8217;t update. The above link is actually a forum and people had similar issues and one person fixed his issue by running the following:
+
+I followed the instruction laid out in "[Upgrading OpenIndiana](http://wiki.openindiana.org/oi/Upgrading+OpenIndiana)", but nothing worked. I re-setup my publisher, I even tried different publisher, but it just wouldn't update. The above link is actually a forum and people had similar issues and one person fixed his issue by running the following:
 
     ~# pkg rebuild-index
-    
 
-But unfortunately it didn&#8217;t help out. So I downloaded the <a href="http://dlc.openindiana.org/isos/151a5/oi-dev-151a5-live-x86.iso" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://dlc.openindiana.org/isos/151a5/oi-dev-151a5-live-x86.iso']);">iso</a>, and just did a clean install. Since I had two drives which I setup before (If you want more information regarding that, check out my <a href="http://virtuallyhyper.com/2012/08/migrating-the-root-zfs-pool-to-a-smaller-drive/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/2012/08/migrating-the-root-zfs-pool-to-a-smaller-drive/']);">previous</a> post), I setup up my system pool on the 8GB drive and my data pool to be on the other drive. So during the clean install I just selected the drive which had my system pool and the install just wiped that drive and setup a new pool on it. But my data pool was still in tact. After the install/update finished, I saw the following:
+
+But unfortunately it didn't help out. So I downloaded the [previous](http://dlc.openindiana.org/isos/151a5/oi-dev-151a5-live-x86.iso) post), I setup up my system pool on the 8GB drive and my data pool to be on the other drive. So during the clean install I just selected the drive which had my system pool and the install just wiped that drive and setup a new pool on it. But my data pool was still in tact. After the install/update finished, I saw the following:
 
     root@openindiana:~# zpool status
     pool: rpool
     state: ONLINE
     scan: none requested
     config:
-    
+
     NAME STATE READ WRITE CKSUM
     rpool ONLINE 0 0 0
     c5t0d0s0 ONLINE 0 0 0
-    
+
     errors: No known data errors
-    
+
     root@openindiana:~# zfs list
     NAME USED AVAIL REFER MOUNTPOINT
     rpool 3.64G 4.17G 45.5K /rpool
@@ -61,26 +61,26 @@ But unfortunately it didn&#8217;t help out. So I downloaded the <a href="http://
     rpool/export/home 66K 4.17G 32K /export/home
     rpool/export/home/elatov 34K 4.17G 34K /export/home/elatov
     rpool/swap 1.06G 5.10G 132M -
-    
+
     root@openindiana:~# uname -a
     SunOS openindiana 5.11 oi_151a5 i86pc i386 i86pc Solaris
-    
 
-and my network setup was gone as well (This was because during the install I selected &#8220;Don&#8217;t setup Networking&#8221;):
+
+and my network setup was gone as well (This was because during the install I selected "Don't setup Networking"):
 
     root@openindiana:~# ifconfig -a
     lo0: flags=2001000849<UP,LOOPBACK,RUNNING,MULTICAST,IPv4,VIRTUAL> mtu 8232 index 1
     inet 127.0.0.1 netmask ff000000
     lo0: flags=2002000849<UP,LOOPBACK,RUNNING,MULTICAST,IPv6,VIRTUAL> mtu 8252 index 1
     inet6 ::1/128
-    
 
-My NIC was there it just wasn&#8217;t setup:
+
+My NIC was there it just wasn't setup:
 
     root@openindiana:~# dladm show-phys
     LINK MEDIA STATE SPEED DUPLEX DEVICE
     e1000g0 Ethernet unknown 0 half e1000g0
-    
+
 
 Luckily the **nwam** service was already disabled and the **networking** service was enabled:
 
@@ -88,7 +88,7 @@ Luckily the **nwam** service was already disabled and the **networking** service
     STATE STIME FMRI
     disabled 6:35:13 svc:/network/physical:nwam
     online 6:35:21 svc:/network/physical:default
-    
+
 
 So first I setup networking, and rebooted the OI VM:
 
@@ -101,7 +101,7 @@ So first I setup networking, and rebooted the OI VM:
     root@openindiana:~# cp /etc/nsswitch.dns /etc/nsswitch.conf
     root@openindiana:~# svcadm enable dns/client
     root@openindiana:~# init 6
-    
+
 
 After I rebooted I saw the following:
 
@@ -113,29 +113,29 @@ After I rebooted I saw the following:
     ether 0:50:56:17:14:bf
     lo0: flags=2002000849<UP,LOOPBACK,RUNNING,MULTICAST,IPv6,VIRTUAL> mtu 8252 index 1
     inet6 ::1/128
-    
+
     root@openindiana:~# netstat -rn
-    
+
     Routing Table: IPv4
     Destination Gateway Flags Ref Use Interface
     -------------------- -------------------- ----- ----- ---------- ---------
     default 192.168.1.1 UG 1 0
     127.0.0.1 127.0.0.1 UH 2 36 lo0
     192.168.1.0 192.168.1.107 U 6 738 e1000g0
-    
+
     Routing Table: IPv6
     Destination/Mask Gateway Flags Ref Use If
     --------------------------- --------------------------- ----- --- ------- -----
     ::1 ::1 UH 2 0 lo0
-    
+
     root@openindiana:~# nslookup pkg.openindiana.org
     Server: 10.131.23.175
     Address: 10.131.23.175#53
-    
+
     Non-authoritative answer:
     Name: pkg.openindiana.org
     Address: 91.194.74.133
-    
+
 
 The VM was back on the network and I could now *ssh* to it. Now to see if we can **import** our data ZFS pool:
 
@@ -148,12 +148,12 @@ The VM was back on the network and I could now *ssh* to it. Now to see if we can
     the '-f' flag.
     see: http://illumos.org/msg/ZFS-8000-EY
     config:
-    
+
     data ONLINE
     c4t0d0s0 ONLINE
-    
 
-Now let&#8217;s go ahead and import the pool:
+
+Now let's go ahead and import the pool:
 
     root@openindiana:~# zpool import -f data
     root@openindiana:~# zpool status
@@ -165,24 +165,24 @@ Now let&#8217;s go ahead and import the pool:
     pool will no longer be accessible on older software versions.
     scan: none requested
     config:
-    
+
     NAME STATE READ WRITE CKSUM
     data ONLINE 0 0 0
     c4t0d0s0 ONLINE 0 0 0
-    
+
     errors: No known data errors
-    
+
     pool: rpool
     state: ONLINE
     scan: none requested
     config:
-    
+
     NAME STATE READ WRITE CKSUM
     rpool ONLINE 0 0 0
     c5t0d0s0 ONLINE 0 0 0
-    
+
     errors: No known data errors
-    
+
 
 So the pool imported fine but it was asking us to update the pool, cause it was running an older version. Just to make sure our ZFS volumes were okay:
 
@@ -200,7 +200,7 @@ So the pool imported fine but it was asking us to update the pool, cause it was 
     rpool/export/home 66.5K 4.16G 32K /export/home
     rpool/export/home/elatov 34.5K 4.16G 34.5K /export/home/elatov
     rpool/swap 1.06G 5.10G 132M -
-    
+
 
 That looked good. Checking the current versions of my two zpools, I saw the following:
 
@@ -210,26 +210,26 @@ That looked good. Checking the current versions of my two zpools, I saw the foll
     root@openindiana:~# zpool get version rpool
     NAME PROPERTY VALUE SOURCE
     rpool version - default
-    
 
-Notice that the new pool doesn&#8217;t have a version. This is expected, from the **oi_151a5** release notes:
+
+Notice that the new pool doesn't have a version. This is expected, from the **oi_151a5** release notes:
 
 > This release includes the async zfs destroy feature from illumos that comes with a new zpool version.
-> 
+>
 > Remember upgrading a zpool is a non-reversable command and any zpools you upgrade may not be readable with previous versions of OI, including other BEs on the same system.
-> 
-> The ZFS feature flags concept is documented here:  
-> http://blog.delphix.com/csiden/files/2012/01/ZFS\_Feature\_Flags.pdf.
-> 
-> In this context the &#8220;zpool version&#8221; becomes a legacy concept, and the number is set to 5000 on existing pools during a &#8220;zpool upgrade&#8221; run.
+>
+> The ZFS feature flags concept is documented here:
+> http://blog.delphix.com/csiden/files/2012/01/ZFS_Feature_Flags.pdf.
+>
+> In this context the "zpool version" becomes a legacy concept, and the number is set to 5000 on existing pools during a "zpool upgrade" run.
 
-So in this version of OpenIndiana zpool versions become a &#8220;legacy concept&#8221;. I went a ahead and updated by data pool:
+So in this version of OpenIndiana zpool versions become a "legacy concept". I went a ahead and updated by data pool:
 
     root@openindiana:~# zpool upgrade data
     This system supports ZFS pool feature flags.
-    
+
     Successfully upgraded 'data' from version 28 to version 5000
-    
+
 
 Now no more warnings are given when checking the status of the zpool:
 
@@ -238,24 +238,24 @@ Now no more warnings are given when checking the status of the zpool:
     state: ONLINE
     scan: none requested
     config:
-    
+
     NAME STATE READ WRITE CKSUM
     data ONLINE 0 0 0
     c4t0d0s0 ONLINE 0 0 0
-    
+
     errors: No known data errors
-    
+
     pool: rpool
     state: ONLINE
     scan: none requested
     config:
-    
+
     NAME STATE READ WRITE CKSUM
     rpool ONLINE 0 0 0
     c5t0d0s0 ONLINE 0 0 0
-    
+
     errors: No known data errors
-    
+
 
 That is all good. I was using Comstar to serve my ZFS volumes as iSCSI LUNs, as I was checking to make sure I have the two components installed, I noticed that **iscsi/target** was not installed:
 
@@ -263,7 +263,7 @@ That is all good. I was using Comstar to serve my ZFS volumes as iSCSI LUNs, as 
     disabled 11:19:18 svc:/system/stmf:default
     root@openindiana:~# svcs -a | grep iscsi
     online 11:19:22 svc:/network/iscsi/initiator:default
-    
+
 
 and the **smtf** service is disabled. I first wanted to install the **iscsi/target** package, so I checked out my *publishers*.
 
@@ -271,15 +271,15 @@ and the **smtf** service is disabled. I first wanted to install the **iscsi/targ
     PUBLISHER TYPE STATUS URI
     openindiana.org origin online http://pkg.openindiana.org/dev/
     opensolaris.org origin online http://pkg.openindiana.org/legacy/
-    
 
-I realized that I had the opensolaris publisher. From &#8220;&#8221;<a href="http://wiki.openindiana.org/oi/Upgrading+OpenIndiana" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://wiki.openindiana.org/oi/Upgrading+OpenIndiana']);">Upgrading OpenIndiana</a>&#8220;:
 
-> **opensolaris.org publisher**  
+I realized that I had the opensolaris publisher. From ""[Upgrading OpenIndiana](http://wiki.openindiana.org/oi/Upgrading+OpenIndiana)":
+
+> **opensolaris.org publisher**
 > If you currently have the opensolaris.org publisher set, we would highly recommend unsetting it by running:
-> 
+>
 >     # pfexec pkg unset-publisher opensolaris.org
->     
+>
 
 So I went ahead and disabled it:
 
@@ -287,14 +287,14 @@ So I went ahead and disabled it:
     root@openindiana:~# pkg publisher
     PUBLISHER TYPE STATUS URI
     openindiana.org origin online http://pkg.openindiana.org/dev/
-    
 
-Then I wanted to install the comstar packages. From &#8220;<a href="http://docs.oracle.com/cd/E19963-01/html/821-1459/fncpi.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://docs.oracle.com/cd/E19963-01/html/821-1459/fncpi.html']);">Configuring COMSTAR (Task Map)</a>&#8220;:
+
+Then I wanted to install the comstar packages. From "[Configuring COMSTAR (Task Map)](http://docs.oracle.com/cd/E19963-01/html/821-1459/fncpi.html)":
 
 > Install the COMSTAR storage server software.
-> 
+>
 >     target# pkg install storage-server
->     
+>
 
 I was actually need to use a proxy to get outside of our local network, so here is what I ran to install Comstar:
 
@@ -303,17 +303,17 @@ I was actually need to use a proxy to get outside of our local network, so here 
     Create boot environment: No
     Create backup boot environment: Yes
     Services to change: 1
-    
+
     DOWNLOAD PKGS FILES XFER (MB)
     Completed 21/21 903/903 48.8/48.8
-    
+
     PHASE ACTIONS
     Install Phase 1816/1816
-    
+
     PHASE ITEMS
     Package State Update Phase 21/21
     Image State Update Phase 2/2
-    
+
 
 and now to confirm I have all the components installed:
 
@@ -321,22 +321,22 @@ and now to confirm I have all the components installed:
     disabled 11:19:18 svc:/system/stmf:default
     disabled 12:11:36 svc:/network/iscsi/target:default
     online 11:19:22 svc:/network/iscsi/initiator:default
-    
 
-I won&#8217;t be using the initiator service from this machine it&#8217;s just going to be an iSCSI target, so I did the following:
+
+I won't be using the initiator service from this machine it's just going to be an iSCSI target, so I did the following:
 
     root@openindiana:~# svcadm enable stmf
     root@openindiana:~# svcadm enable iscsi/target
     root@openindiana:~# svcadm disable iscsi/initiator
-    
 
-First let&#8217;s create an iSCSI target:
+
+First let's create an iSCSI target:
 
     root@openindiana:~# itadm create-target
     Target iqn.2010-09.org.openindiana:02:bd79a6ff-33c2-41d3-8f0e-9c8d8b6e9fcb successfully created
-    
 
-Let&#8217;s make sure it&#8217;s created:
+
+Let's make sure it's created:
 
     root@openindiana:~# itadm list-target -v
     TARGET NAME STATE SESSIONS
@@ -346,71 +346,71 @@ Let&#8217;s make sure it&#8217;s created:
     targetchapuser: -
     targetchapsecret: unset
     tpg-tags: default
-    
 
-Next let&#8217;s create a host group so we can add our esx hosts to it:
+
+Next let's create a host group so we can add our esx hosts to it:
 
     root@openindiana:~# stmfadm create-hg esx
-    
+
 
 Next go to each host and find out their corresponding IQNs, here are mine:
 
     ~ # vmkiscsi-tool -I -l vmhba33
     iSCSI Node Name: iqn.1998-01.com.vmware:localhost-428367f3
-    
+
     [root@esx40u1 ~]# vmkiscsi-tool -I -l vmhba33
     iSCSI Node Name: iqn.1998-01.com.vmware:esx40u1-5da6606e
-    
+
     ~ # vmkiscsi-tool -I -l vmhba33
     iSCSI Node Name: iqn.1998-01.com.vmware:localhost-57ecf193
-    
+
 
 Then add each IQN as an initiator and add it to our host group:
 
     root@openindiana:~# itadm create-initiator iqn.1998-01.com.vmware:esx40u1-5da6606e
     root@openindiana:~# itadm create-initiator iqn.1998-01.com.vmware:localhost-57ecf193
     root@openindiana:~# itadm create-initiator iqn.1998-01.com.vmware:localhost-428367f3
-    
+
     root@openindiana:~# stmfadm add-hg-member -g esx iqn.1998-01.com.vmware:esx40u1-5da6606e
     root@openindiana:~# stmfadm add-hg-member -g esx iqn.1998-01.com.vmware:localhost-57ecf193
     root@openindiana:~# stmfadm add-hg-member -g esx iqn.1998-01.com.vmware:localhost-428367f3
-    
 
-Let&#8217;s make sure they are added properly:
+
+Let's make sure they are added properly:
 
     root@openindiana:~# stmfadm list-hg -v
     Host Group: esx
     Member: iqn.1998-01.com.vmware:esx40u1-5da6606e
     Member: iqn.1998-01.com.vmware:localhost-57ecf193
     Member: iqn.1998-01.com.vmware:localhost-428367f3
-    
 
-Now we can re-add our ZFS volumes to Comstar using the old GUID. I actually had to do this in this <a href="http://virtuallyhyper.com/2012/08/migrating-a-zfs-pool-with-zfs-volumes-used-for-nfs-shares-and-iscsi-comstar-volumes/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/2012/08/migrating-a-zfs-pool-with-zfs-volumes-used-for-nfs-shares-and-iscsi-comstar-volumes/']);">previous</a> post of mine. So here is what I did to add my LUNs:
+
+Now we can re-add our ZFS volumes to Comstar using the old GUID. I actually had to do this in this [previous](http://virtuallyhyper.com/2012/08/migrating-a-zfs-pool-with-zfs-volumes-used-for-nfs-shares-and-iscsi-comstar-volumes/) post of mine. So here is what I did to add my LUNs:
 
     root@openindiana:~# stmfadm create-lu -p guid=600144f0928c010000004fc511ec0001 /dev/zvol/rdsk/data/iscsi_share
     Logical unit created: 600144F0928C010000004FC511EC0001
-    
+
     root@openindiana:~# stmfadm create-lu -p guid=600144f0928c010000004fc90a3a0001 /dev/zvol/rdsk/data/iscsi_share2
     Logical unit created: 600144F0928C010000004FC90A3A0001
-    
+
 
 List your LUNs to make sure they are there:
 
     root@openindiana:~# sbdadm list-lu
-    
+
     Found 2 LU(s)
-    
+
     GUID DATA SIZE SOURCE
     -------------------------------- ------------------- ----------------
     600144f0928c010000004fc511ec0001 107374182400 /dev/zvol/rdsk/data/iscsi_share
     600144f0928c010000004fc90a3a0001 139586437120 /dev/zvol/rdsk/data/iscsi_share2
-    
 
-That looks good, now let&#8217;s add a &#8220;view&#8221; to allow the hostgroup &#8220;esx&#8221; to access the above LUNS:
+
+That looks good, now let's add a "view" to allow the hostgroup "esx" to access the above LUNS:
 
     root@openindiana:~# stmfadm add-view -h esx 600144f0928c010000004fc511ec0001
     root@openindiana:~# stmfadm add-view -h esx 600144f0928c010000004fc90a3a0001
-    
+
 
 Check to make sure the views looks good:
 
@@ -419,29 +419,29 @@ Check to make sure the views looks good:
     Host group : esx
     Target group : All
     LUN : 0
-    
+
     root@openindiana:~# stmfadm list-view -l 600144f0928c010000004fc90a3a0001
     View Entry: 0
     Host group : esx
     Target group : All
     LUN : 1
-    
+
 
 That looks good. After doing a rescan on all the hosts, my LUNs came back without any issues:
 
     ~ # esxcfg-rescan
     ~ # esxcfg-scsidevs -m | grep OI
     naa.600144f0928c010000004fc511ec0001:1 /vmfs/devices/disks/naa.600144f0928c010000004fc511ec0001:1 4fc903bb-6298d17d-8417-00505617149e 0 OI_LUN0
-    
+
 
 I was using one as a VMFS datastore (OI_LUN0) and the other as an RDM. Here are both of the LUNs on the host:
 
     ~ # esxcfg-scsidevs -c | grep OI
     naa.600144f0928c010000004fc511ec0001 Direct-Access /vmfs/devices/disks/naa.600144f0928c010000004fc511ec0001 102400MB NMP OI iSCSI Disk (naa.600144f0928c010000004fc511ec0001)
     naa.600144f0928c010000004fc90a3a0001 Direct-Access /vmfs/devices/disks/naa.600144f0928c010000004fc90a3a0001 133120MB NMP OI iSCSI Disk (naa.600144f0928c010000004fc90a3a0001)
-    
 
-the NAAs even match <img src="http://virtuallyhyper.com/wp-includes/images/smilies/icon_smile.gif" alt="icon smile Getting OpenIndiana Back to its Original State After Updating by Doing a Clean Install" class="wp-smiley" title="Getting OpenIndiana Back to its Original State After Updating by Doing a Clean Install" /> For NFS, nothing had to be done since the path stayed the same:
+
+the NAAs even match :) For NFS, nothing had to be done since the path stayed the same:
 
     root@openindiana:~# zfs get sharenfs data/nfs_share
     NAME PROPERTY VALUE SOURCE
@@ -451,14 +451,11 @@ the NAAs even match <img src="http://virtuallyhyper.com/wp-includes/images/smili
     zfs nfs=()
     zfs/data/nfs_share nfs=() nfs:sys=(rw="*" root="192.168.1.108")
     /data/nfs_share
-    
+
 
 and the host already auto-mounted the NFS share:
 
     ~ # esxcfg-nas -l
     nfs is /data/nfs_share from 192.168.1.107 mounted
-    
 
-<p class="wp-flattr-button">
-  <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2012/09/getting-openindiana-back-to-its-original-state-after-updating-by-doing-a-clean-install/" title=" Getting OpenIndiana Back to it&#8217;s Original State After Updating by Doing a Clean Install" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:COMSTAR HostGroup,COMSTAR View,dladm,OpenIndiana 151a5,pkg install,pkg publisher,sbdadm,stmfadm,svcadm,svcs,vmkiscsi-tool,ZFS,ZFS sharenfs,zpool,zpool upgrade,blog;button:compact;">I decided to update from oi_151a4 to oi_151a5. I tried using pkg: ~# pkg image-update I followed the instruction laid out in &#8220;Upgrading OpenIndiana&#8220;, but nothing worked. I re-setup my...</a>
-</p>
+
