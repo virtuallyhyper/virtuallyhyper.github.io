@@ -1,13 +1,13 @@
 authors:
-  joe:
+  'Joe Chan':
     name: 'Joe Chan'
     display_name: Joe
-    gravatar: a
-    email: a
-    web: a
-    twitter: a
-    github: a
-  jarret:
+    gravatar: http://www.gravatar.com/avatar/3bd8bdbd5acc5d60c7b17bb8a0978c68.png
+    email: joe@virtuallyhyper.com
+    web: http://joechan.us
+    twitter: joech4n
+    github: foolishbrilliance
+  'Jarret Lavallee':
     name: 'Jarret Lavallee'
     display_name: Jarret
     gravatar: b
@@ -15,7 +15,7 @@ authors:
     web: b
     twitter: b
     github: b
-  karim:
+  'Karim Elatov':
     name: 'Karim Elatov'
     display_name: Karim
     gravatar: c
