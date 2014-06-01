@@ -1,25 +1,24 @@
-authors:
-  'Joe Chan':
-    name: 'Joe Chan'
-    display_name: Joe
-    gravatar: http://www.gravatar.com/avatar/3bd8bdbd5acc5d60c7b17bb8a0978c68.png
-    email: joe@virtuallyhyper.com
-    web: http://joechan.us
-    twitter: joech4n
-    github: foolishbrilliance
-  'Jarret Lavallee':
-    name: 'Jarret Lavallee'
-    display_name: Jarret
-    gravatar: b
-    email: b
-    web: http://virtuallyhyper.com
-    twitter: b
-    github: b
-  'Karim Elatov':
-    name: 'Karim Elatov'
-    display_name: Karim
-    gravatar: c
-    email: c
-    web: http://virtuallyhyper.com
-    twitter: c
-    github: c
+'Joe Chan':
+  name: 'Joe Chan'
+  display_name: Joe
+  gravatar: http://www.gravatar.com/avatar/3bd8bdbd5acc5d60c7b17bb8a0978c68.png
+  email: joe@virtuallyhyper.com
+  web: http://joechan.us
+  twitter: joech4n
+  github: foolishbrilliance
+'Jarret Lavallee':
+  name: 'Jarret Lavallee'
+  display_name: Jarret
+  gravatar: b
+  email: b
+  web: http://virtuallyhyper.com
+  twitter: b
+  github: b
+'Karim Elatov':
+  name: 'Karim Elatov'
+  display_name: Karim
+  gravatar: c
+  email: c
+  web: http://virtuallyhyper.com
+  twitter: c
+  github: c
