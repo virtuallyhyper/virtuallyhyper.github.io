@@ -24,7 +24,8 @@
   </div>
 
   <div class="span4">
-    <h4>Published by {{ page.author }}</h4>
+    {% assign author_info = site.data.authors[page.author] %}
+    <h4>Published by <a href="{{ author_info.web }}">{{ page.author }}</a></h4>
     <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
 
   {% unless page.tags == empty %}
