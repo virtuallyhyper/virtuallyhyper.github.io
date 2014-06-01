@@ -1,233 +1,90 @@
 ---
-author: karim
-comments: true
-date: 2012-12-04 17:14:49+00:00
-layout: post
-slug: rooting-my-htc-sensation-phone
 title: Rooting my HTC Sensation Phone
-wordpress_id: 5095
+author: Karim Elatov
+layout: post
+permalink: /2012/12/rooting-my-htc-sensation-phone/
+dsq_thread_id:
+  - 1405469582
 categories:
-- Home Lab
-- OS
-following_users:
-- jarret
-- kelatov
+  - Home Lab
+  - OS
 tags:
-- adb backup
-- bootloader
-- ClockWorkMod Recovery
-- ControlBear
-- fastboot
-- HTC CID
-- HTC Sensation
-- S-OFF
-- Wire Trick
+  - adb backup
+  - bootloader
+  - ClockWorkMod Recovery
+  - ControlBear
+  - fastboot
+  - HTC CID
+  - HTC Sensation
+  - S-OFF
+  - Wire Trick
 ---
-
 I wanted to root my HTC Sensation phone, since I have been putting it off for a while. I read some good guides on how to do it, here is a list:
 
-
-
-
-
-
-
-  1. "[How to Root Your HTC Sensation](http://www.androidauthority.com/how-to-root-htc-sensation-21697/)" 
-
-
-  2. "[How to Root HTC Sensation 4G](http://how2rootandroiddevices.blogspot.com/2012/06/how-to-root-htc-sensation-4g.html)" 
-
-
-  3. "[How To Root HTC Sensation/Sensation XE Running Ice Cream Sandwich](http://www.blogotechblog.com/2012/04/how-to-root-htc-sensationsensation-xe-running-ice-cream-sandwich/)" 
-
-
-
-
+1.  "[How to Root Your HTC Sensation](http://www.androidauthority.com/how-to-root-htc-sensation-21697/)"
+2.  "[How to Root HTC Sensation 4G](http://how2rootandroiddevices.blogspot.com/2012/06/how-to-root-htc-sensation-4g.html)"
+3.  "[How To Root HTC Sensation/Sensation XE Running Ice Cream Sandwich](http://www.blogotechblog.com/2012/04/how-to-root-htc-sensationsensation-xe-running-ice-cream-sandwich/)"
 
 ### 1. Create Backups
 
+Most of the above links, of course, recommended backing up your data just in case. They recommended using "Titanimum Backup" and other solutions as well. But all the tools required the phone to be rooted already. What a 'Catch 22' situation. So then I ran into [this](http://blog.shvetsov.com/2012/09/backup-your-android-without-root-or.html) post, it's about creating a back up without using any external apps. Starting with Android 4.0 (Ice Cream Sandwich) you can use *adb backup* to create a backup of your applications and data. Here is what I ran:
 
-
-
-
-Most of the above links, of course, recommended backing up your data just in case. They recommended using "Titanimum Backup" and other solutions as well. But all the tools required the phone to be rooted already. What a 'Catch 22' situation. So then I ran into [this](http://blog.shvetsov.com/2012/09/backup-your-android-without-root-or.html) post, it's about creating a back up without using any external apps. Starting with Android 4.0 (Ice Cream Sandwich) you can use _adb backup_ to create a backup of your applications and data. Here is what I ran:
-
-
-
-
-    
-
-```
     [elatov@klaptop platform-tools]$ ./adb backup -f ~/phone/backup -apk -shared -all -nosystem
     Now unlock your device and confirm the backup operation.
-    
-```
-
-
-
-
 
 
 I then went to my phone and saw the following screen:
 
-
-
-
-
-[![](http://virtuallyhyper.com/wp-content/uploads/2012/12/phone_backup.png)](http://virtuallyhyper.com/wp-content/uploads/2012/12/phone_backup.png)
-
-
-
-
+![phone_backup](https://github.com/elatov/uploads/raw/master/2012/12/phone_backup.png)
 
 I didn't enter any password and just hit "Back up my data" and the back up process started. In the end, I had the following:
 
-
-
-
-    
-
-```
     [elatov@klaptop phone]$ ls -lh
     total 867M
     -rw-r----- 1 elatov elatov 867M Dec  1 13:21 backup
-    
-```
-
-
-
-
 
 
 I really wanted to find out if the backups were valid. I then ran into [this](http://nelenkov.blogspot.com/2012/06/unpacking-android-backups.html) blog. It had a very in depth description of how the back up process works and what encryption algorithms are used. It also had a command on how to convert the android backup to a tar file. Here is the command I ran to convert the backup:
 
-
-
-
-    
-
-```
     [elatov@klaptop phone]$ dd if=backup bs=1 skip=24 | openssl zlib -d > mybackup.tar
     3078081068:error:29065064:lib(41):BIO_ZLIB_READ:zlib inflate error:c_zlib.c:570:zlib error:data error
-    
-```
 
 
+At first it failed. I later found a couple of documents that mentioned that there was a bug with the back up utility prior to an update of 4.0.4. I was running 4.0.3, so I was probably running into that. The bug manifests it self, when you include *shared* data (contents of the SD-card) with the *adb backup* command. I then made another backup and didn't included the SD-card contents and then trying to convert that backup, it was successful:
 
-
-
-
-At first it failed. I later found a couple of documents that mentioned that there was a bug with the back up utility prior to an update of 4.0.4. I was running 4.0.3, so I was probably running into that. The bug manifests it self, when you include _shared_ data (contents of the SD-card) with the _adb backup_ command. I then made another backup and didn't included the SD-card contents and then trying to convert that backup, it was successful:
-
-
-
-
-    
-
-```
     [elatov@klaptop phone]$ dd if=backup2 bs=1 skip=24 | openssl zlib -d > mybackup2.tar
     144560293+0 records in
     144560293+0 records out
     144560293 bytes (145 MB) copied, 510.611 s, 283 kB/s
-    
-```
 
 
+There is also a java application called "Android Backup Extractor". Here is [link](https://github.com/nelenkov/android-backup-extractor) to that forum. From the last link they also mention the bug that I ran into:
 
-
-
-
-There is also a java application called "Android Backup Extractor". Here is [link](https://github.com/nelenkov/android-backup-extractor) to that. And someone also wrote a Perl script to "decrypt" the back up. Here is a [link](http://forum.xda-developers.com/showthread.php?t=1730309) to that forum. From the last link they also mention the bug that I ran into:
-
-
-
-
-
-> 
-  
-> 
 > I had ran into issues with ADB backups performed under Android 4.0.4 before the JB upgrade (on a Samsung Galaxy Nexus).I did include the shared storage (accidentally or intentionally I don't remember) and I ran into this bug (Android issue 28303)
-> 
-> 
-
-
-
-
-
 
 I was just happy to know that I have a valid backup and that I could confirm the data. I then mounted the SD-card from my phone to my laptop and created a manual backup of that, just in case. Here are the commands that I ran on my laptop to get a backup of my SD-card (after I mounted it from my phone):
 
-
-
-
-    
-
-```
     $ sudo mount /dev/sdb /mnt/usb/
-    $ tar cpvjf ~/phone/phone_sd-card.tar.bz2 /mnt/usb 
-    
-```
-
-
-
-
+    $ tar cpvjf ~/phone/phone_sd-card.tar.bz2 /mnt/usb
 
 
 At the end of the backing up, I had the following files:
 
-
-
-
-    
-
-```
     [elatov@klaptop phone]$ ls
     backup  backup2  mybackup2.tar  phone_sd_card_sensation.tar.bz2
-    
-```
-
-
-
-
 
 
 I then realized that the "rooting" steps above are for anyone that has not updated to 4.0.3 ICS, and I unfortunately had already done that. So I found other links, cause the instructions are different. Here are some of the links:
 
-
-
-
-
-
-
-  * "[How to Root & S-OFF HTC Sensation - HBOOT 1.27.0000 & Firmware 3.33!](http://forum.xda-developers.com/showthread.php?t=1870233)"
-
-
-  * "[How To S-OFF, Root, Flash CWM Recovery On HTC Sensation With HBoot 1.27.0000](http://www.techsliver.com/how-to-s-off-root-flash-cwm-recovery-on-htc-sensation-with-hboot-1-27-0000/)" 
-
-
-
-
+*   "[How to Root & S-OFF HTC Sensation - HBOOT 1.27.0000 & Firmware 3.33!](http://forum.xda-developers.com/showthread.php?t=1870233)"
+*   "[How To S-OFF, Root, Flash CWM Recovery On HTC Sensation With HBoot 1.27.0000](http://www.techsliver.com/how-to-s-off-root-flash-cwm-recovery-on-htc-sensation-with-hboot-1-27-0000/)"
 
 I followed mostly the last one.
 
-
-
-
-
 ### 2. Unlock Bootloader, following instructions on http://htcdev.com/bootloader
-
-
-
-
 
 The website provides their own 'fastboot' binary. Then you run this:
 
-
-
-
-    
-
-```
     [elatov@klaptop downloads]$ chmod +x fastboot
     [elatov@klaptop downloads]$ ./fastboot oem get_identifier_token
     ... INFO
@@ -252,102 +109,40 @@ The website provides their own 'fastboot' binary. Then you run this:
     INFO< <<<< Identifier Token End >>>>>
     OKAY
     [elatov@klaptop downloads]$
-    
-```
 
 
+You can then upload the above output to their site and they will provide a *.bin* file to unlock your bootloader with the following command:
 
-
-
-
-You can then upload the above output to their site and they will provide a _.bin_ file to unlock your bootloader with the following command:
-
-
-
-
-    
-
-```
     [elatov@klaptop downloads]$ ./fastboot  flash unlocktoken Unlock_code.bin
     sending 'unlocktoken' (0 KB)... OKAY
     writing 'unlocktoken'... INFOunlock token check successfully
     OKAY
-    
-```
-
-
-
-
 
 
 ### 3. Install ClockWorkMod Recovery Using Android SDK
 
-
-
-
-
 Download the *.img * file and then run the following to install the image:
 
-
-
-
-    
-
-```
     [elatov@klaptop platform-tools]$ ./fastboot flash recovery ~/downloads/recovery.img
     sending 'recovery' (4876 KB)...
     OKAY [  1.160s]
     writing 'recovery'...
     OKAY [ 10.433s]
     finished. total time: 11.594s
-    
-```
-
-
-
-
 
 
 ### 4. Install SuperSU by uploading it to the SD-Card, and then using the ClockWorkMod Recovery to install it
 
+It took a while to find the latest version since the above site had an expired link. But after some *googling* around I found the latest version from [here](http://www.androidtotal.com/root-install-clockworkmod-recovery-on-htc-sensation-with-android-4.0.3-hboot-1.27.000/). After you have the file, do the following to install it:
 
-
-
-
-It took a while to find the latest version since the above site had an expired link. But after some _googling_ around I found the latest version from [here](http://www.androidtotal.com/root-install-clockworkmod-recovery-on-htc-sensation-with-android-4.0.3-hboot-1.27.000/). After you have the file, do the following to install it:
-
-
-
-
-
-
-
-  * Upload the file onto the SD-card.
-
-
-  * Boot into CWM Recovery.
-
-
-  * Select install Zip File from SD-card.
-
-
-
-
+*   Upload the file onto the SD-card.
+*   Boot into CWM Recovery.
+*   Select install Zip File from SD-card.
 
 ### 5. Follow instructions laid out in http://unlimited.io/juopunutbear.htm to turn S-OFF with the "wire trick"
 
-
-
-
-
 Here is how wire trick looked like from the terminal:
 
-
-
-
-    
-
-```
     [elatov@klaptop bear]$ sudo ./ControlBear
     ========= ControlBear 0.11 beta for JuopunutBear S-OFF ==========
                   (c) Copyright 2012 Unlimited.IO
@@ -357,9 +152,9 @@ Here is how wire trick looked like from the terminal:
         instructions on how to use this tool and for support.
      This program may not be redistributed or included in other
        works without the express permission of Team Unlimited.
-    
+
              www.unlimited.io    |    team'@'unlimited.io
-    
+
     Starting up......
     Testing ADB connection
     Test 1: Rebooting into bootloader
@@ -396,7 +191,7 @@ Here is how wire trick looked like from the terminal:
     Loaded......
     Do not remove sdcard from phone
     Do wire-trick now!! Check the instructions at http://unlimited.io
-    
+
     === Waiting for device....
     (11/45)
     Found device...
@@ -429,28 +224,12 @@ Here is how wire trick looked like from the terminal:
     Flashing.......
     Rebooting......
     JuopunutBear hboot installed
-    
-```
-
-
-
-
 
 
 ### 6. Change CID, so you can install any ROM on your device
 
-
-
-
-
 All the sites had the same instructions. Here is what I did to accomplish that:
 
-
-
-
-    
-
-```
     [elatov@klaptop platform-tools]$ ./adb reboot-bootloader
     [elatov@klaptop platform-tools]$ ./fastboot devices
     HT164T500742    fastboot
@@ -476,94 +255,34 @@ All the sites had the same instructions. Here is what I did to accomplish that:
     finished. total time: 0.002s
     [elatov@klaptop platform-tools]$ ./fastboot reboot
     rebooting...
-    
+
     finished. total time: 1.661s
-    
-```
-
-
-
-
 
 
 ### 7. Pick a custom ROM and install it.
 
+"[here](http://www.lifehacker.com.au/2012/06/five-best-android-roms/). Here is a concise list of instructions:
 
-
-
-
-"[Five Best Android ROMs](http://www.lifehacker.com.au/2012/06/five-best-android-roms/)" and "[Top 5 Custom ROM for HTC Rezound](http://tips4droid.com/top-5-custom-rom-for-htc-rezound/)" talk about the different ROMs. I know that Cyanogen is pretty popular and I have used it with my previous phone. There is also the "Android Revolution HD". All of the instructions on how to install Revolution HD, can be found [here](http://forum.xda-developers.com/showthread.php?t=1098849) and also [here](http://www.techsliver.com/step-by-step-guide-on-how-to-install-android-revolution-hd-6.4.0-ics-rom-on-htc-sensation-4g/). Doing some research it seemed that the Revolution HD looks exactly the same as ICS and it's just over clocked for performance and has a great battery life. I wanted to try out another interface so I decided to go with CyanogenMod. Instructions on how to install that can be found [here](http://wiki.cyanogenmod.org/w/Install_CM_for_pyramid). Here is a concise list of instructions:
-
-
-
-
-
-
-
-  1. Download the latest CyanogenMod 9 ROM to your computer
-
-
-  2. Download the latest Google Apps package
-
-
-  3. Copy the latest CyanogenMod 9 ROM and the Google Apps ZIP files to the root of your HTC Sensation’s SD-card.
-
-
-  4. Boot into ClockWorkMod Recovery
-
-
-  5. Make a Nandroid backup of your current ROM by selecting Backup and Restore > Backup.
-
-
-  6. Select Wipe Data/Factory Reset.
-
-
-  7. Select the option to Wipe cache partition.
-
-
-  8. Select Install ZIP from SD-Card > Choose ZIP from SD-Card. Select the latest CyanogenMod 9 ROM.
-
-
-  9. Select Install ZIP from SD-Card > Choose ZIP from SD-Card again and select the Google Apps package.
-
-
-  10. Reboot the phone. 
-
-
-
-
+1.  Download the latest CyanogenMod 9 ROM to your computer
+2.  Download the latest Google Apps package
+3.  Copy the latest CyanogenMod 9 ROM and the Google Apps ZIP files to the root of your HTC Sensation’s SD-card.
+4.  Boot into ClockWorkMod Recovery
+5.  Make a Nandroid backup of your current ROM by selecting Backup and Restore > Backup.
+6.  Select Wipe Data/Factory Reset.
+7.  Select the option to Wipe cache partition.
+8.  Select Install ZIP from SD-Card > Choose ZIP from SD-Card. Select the latest CyanogenMod 9 ROM.
+9.  Select Install ZIP from SD-Card > Choose ZIP from SD-Card again and select the Google Apps package.
+10. Reboot the phone.
 
 After I rebooted I had a brand new Interface to play with; I liked the look.
 
-
-
-
-
 ### 8. Restore Back'ed up Applications
-
-
-
-
 
 I then decided to see if my restore would work out. So I connected my phone to laptop and ran the following:
 
-
-
-
-    
-
-```
-    elatov@klaptop platform-tools]$ ./adb restore ~/phone/backup2 
+    elatov@klaptop platform-tools]$ ./adb restore ~/phone/backup2
     Now unlock your device and confirm the restore operation.
-    
-```
-
-
-
-
 
 
 Then opened up my phone and it asked to allow the restore process and I did. I must say, even though with the back up process it's all or nothing (you can't choose what apps to restore), the restore went very well. I was able to start up all of my old applications without any issues.
-
-
 

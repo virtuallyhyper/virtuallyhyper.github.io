@@ -3,19 +3,19 @@
 permalink: /:year/:month/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-pygments: true
+markdown: kramdown
+highlighter: pygments
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
 title : VirtuallyHyper
-tagline: A Virtualization Blog
+tagline: The Virtualization Blog
 author :
   name : VirtuallyHyper
   email : contact@virtuallyhyper.com
-  github : username
+  github : virtuallyhyper
   twitter : virtuallyhyper
-  feedburner : feedname
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -26,7 +26,6 @@ author :
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 production_url : http://beta.virtuallyhyper.com
-
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
 JB :
@@ -54,7 +53,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  # BASE_PATH : http://blog.joechan.us/vh2-jekyll
+  BASE_PATH : false
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
@@ -82,16 +81,16 @@ JB :
   comments :
     provider : disqus
     disqus :
-      short_name : jekyllbootstrap
-    livefyre :
-      site_id : 123
-    intensedebate :
-      account : 123abc
-    facebook :
-      appid : 123
-      num_posts: 5
-      width: 580
-      colorscheme: light
+      short_name : virtuallyhyper
+#    livefyre :
+#      site_id : 123
+#    intensedebate :
+#      account : 123abc
+#    facebook :
+#      appid : 123
+#      num_posts: 5
+#      width: 580
+#      colorscheme: light
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -101,14 +100,6 @@ JB :
     provider : google 
     google : 
         tracking_id : 'UA-7265705-7'
-        domain: 'virtuallyhyper.com'
-    getclicky :
-      site_id : 
-    mixpanel :
-        token : '_MIXPANEL_TOKEN_'
-    piwik :
-        baseURL : 'myserver.tld/piwik' # Piwik installation address (without protocol)
-        idsite : '1'                   # the id of the site on Piwik
 
   # Settings for sharing helper. 
   # Sharing is for things like tweet, plusone, like, reddit buttons etc.
@@ -128,35 +119,7 @@ JB :
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
-  
-# VH settings
-paginate: 10
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
-  
-authors:
-  joe:
-    name: 'Joe Chan'
-    display_name: Joe
-    gravatar: a
-    email: a
-    web: a
-    twitter: a
-    github: a
-  jarret:
-    name: 'Jarret Lavallee'
-    display_name: Jarret
-    gravatar: b
-    email: b
-    web: b
-    twitter: b
-    github: b
-  karim:
-    name: 'Karim Elatov'
-    display_name: Karim
-    gravatar: c
-    email: c
-    web: c
-    twitter: c
-    github: c
+search :
+  provider : gcse
+  gcse :
+    cx : 001912851300668510249:qatni_pvtqg
