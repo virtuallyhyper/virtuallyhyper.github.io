@@ -11,6 +11,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    {% include util/head %}
+
     <!-- Le styles -->
     <link href="{{ ASSET_PATH }}/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css" media="screen">
@@ -44,25 +46,87 @@
           <a class="brand" href="{{ HOME_PATH }}">{{ site.title }}</a>
           <div class="nav-collapse">
             <ul class="nav">
-		{% include themes/twitter-2.0/nav.html %}
+              {% include themes/twitter-2.0/nav.html %}
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span8">
+          <div class="content">
+            {{ content }}
+          </div>
+        </div>
+        <div class="span4">
+          <div class="sidebar">
+          <div class="social sidebar-item">
+            <a href="https://twitter.com/virtuallyhyper" class="twitter-follow-button" data-show-count="false">Follow @virtuallyhyper</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          </div>
+          <div class="sidebar-item">
+            <h2>Want to support us?</h2>
+            <a href="http://bit.ly/donate-to-virtuallyhyper" target="_blank">
+            <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" />
+            </a>
+            <a href="http://flattr.com/thing/1101166/VirtuallyHyper" target="_blank">
+            <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+            <script type="text/javascript" src="https://blockchain.info//Resources/wallet/pay-now-button.js"></script>
+            <div style="font-size:8px;margin:0 auto;width:100%" class="blockchain-btn"
+                 data-address="1LbaicuGY3RsusHonGmwhXWaUw2yYnj2k3"
+                 data-shared="false">
+                <div class="blockchain stage-begin">
+                    <img src="http://i.imgur.com/zTI9f5u.png"/>
+                </div>
+                <div class="blockchain stage-loading" style="text-align:center">
+                    <img src="https://blockchain.info//Resources/loading-large.gif"/>
+                </div>
+                <div class="blockchain stage-ready">
+                     <p align="center">Our Bitcoin Address: <b><br><small>[[address]]</small></b></p>
+                     <p align="center" class="qr-code"></p>
+                </div>
+                <div class="blockchain stage-paid">
+                     Donation of <b>[[value]] BTC</b> Received. Thank You.
+                </div>
+                <div class="blockchain stage-error">
+                    <font color="red">[[error]]</font>
+                </div>
+            </div>
 
-      <div class="content">
-        {{ content }}
-      </div>
+            <script type='text/javascript'>
+              var amzn_wdgt={widget:'MyFavorites'};
+              amzn_wdgt.tag='virtuallyhyper-20';
+              amzn_wdgt.columns='1';
+              amzn_wdgt.rows='3';
+              amzn_wdgt.title='Henri-Cartier-Bresson: Photographer Extraordinaire';
+              amzn_wdgt.width='250';
+              amzn_wdgt.ASIN='0893817449,0500410607,050054199X,0500286426,0893818755,050054333X,0500543178,0945506562';
+              amzn_wdgt.showImage='True';
+              amzn_wdgt.showPrice='True';
+              amzn_wdgt.showRating='True';
+              amzn_wdgt.design='2';
+              amzn_wdgt.colorTheme='Orange';
+              amzn_wdgt.headerTextColor='#FFFFFF';
+              amzn_wdgt.marketPlace='US';
+            </script>
+            <script type='text/javascript' src='http://wms-na.amazon-adsystem.com/20070822/US//js/AmazonWidgets.js'>
+            </script>
+
+          </div><!-- /sidebar sidebar-content -->
+        </div>
+        </div><!-- /span4 -->
+
+      </div><!-- /row-fluid -->
 
       <footer>
         <p>&copy;{{ site.author.name }} {{ site.time | date: '%Y' }}. Thoughts are our own and may not neccessarily represent the companies we work for.
         </p>
       </footer>
 
-    </div> <!-- /container -->
+    </div><!-- /container-fluid -->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="{{ ASSET_PATH }}/js/jquery.min.js"><\/script>')</script>

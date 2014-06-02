@@ -2,11 +2,21 @@
   <h1>{{ page.title }}</h1>
 </div>
 
-<div class="row">
-  <div class="span8">
-    {{ content }}
+    {% assign author_info = site.data.authors[page.author] %}
+    <i class="fa fa-calendar"></i> {{ page.date | date_to_long_string }} <i class="fa fa-user"></i> <a href="{{ author_info.web }}">{{ page.author }}</a>
+
+    {% unless page.tags == empty %}
+      <div class="tag_box">
+      <i class="fa fa-tags"></i> 
+      {% assign tags_list_horizontal = page.tags %}
+      {% include JB/tags_list_horizontal %}
+      </div>
+    {% endunless %}
     <hr>
-    <div class="pagination">
+    {{ content }}
+    <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='6778737' style="float: left"></div>
+
+    <div class="pagination" style="float: right">
       <ul>
       {% if page.previous %}
         <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
@@ -21,26 +31,8 @@
       {% endif %}
       </ul>
     </div>
-  </div>
 
-  <div class="span4">
-    {% assign author_info = site.data.authors[page.author] %}
-    <h4>Published by <a href="{{ author_info.web }}">{{ page.author }}</a></h4>
-    <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
 
-  {% unless page.tags == empty %}
-    <h4>Tags</h4>
-    <ul class="tag_box">
-    {% assign tags_list = page.tags %}
-    {% include JB/tags_list %}
-    </ul>
-  {% endunless %}
-  </div>
-</div>
-
-<div class="row">
-  <div class="span8">
     <hr>
+    {% include util/adsense %}
     {% include JB/comments %}
-  </div>
-</div>
