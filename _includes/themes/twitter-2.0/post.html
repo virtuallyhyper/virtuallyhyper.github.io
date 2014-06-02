@@ -14,10 +14,9 @@
     {% endunless %}
     <hr>
     {{ content }}
-    <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='6778737'></div>
+    <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='6778737' style="float: left"></div>
 
-    <hr>
-    <div class="pagination">
+    <div class="pagination" style="float: right">
       <ul>
       {% if page.previous %}
         <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
@@ -36,5 +35,4 @@
 
     <hr>
     {% include util/adsense %}
-    <hr>
     {% include JB/comments %}
