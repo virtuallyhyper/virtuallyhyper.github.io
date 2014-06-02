@@ -3,7 +3,7 @@
 </div>
 
     {% assign author_info = site.data.authors[page.author] %}
-    <i class="fa fa-calendar"></i> {{ page.date | date_to_long_string }} <i class="fa fa-user"></i> <a href="{{ author_info.web }}">{{ page.author }}</a>
+    <i class="fa fa-calendar"></i> {{ page.date | date_to_long_string }} <i class="fa fa-user"></i> <a href="{{ author_info.web }}">{{ page.author }}</a> <div style="float: right;"><i class="fa fa-comments"></i> <a href="{{ BASE_PATH }}{{ page.url }}#disqus_thread"></a></div>
 
     {% unless page.tags == empty %}
       <div class="tag_box">

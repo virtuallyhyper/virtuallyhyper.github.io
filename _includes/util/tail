@@ -1,3 +1,20 @@
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ ASSET_PATH }}/js/jquery.min.js"><\/script>')</script>
-    <script src="{{ ASSET_PATH }}/js/bootstrap.min.js"></script>
+<!-- Disqus comment count per http://help.disqus.com/customer/portal/articles/565624-tightening-your-disqus-integration -->
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+var disqus_shortname = 'virtuallyhyper'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+<!-- JQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ ASSET_PATH }}/js/jquery.min.js"><\/script>')</script>
+
+<!-- Bootstrap -->
+<script src="{{ ASSET_PATH }}/js/bootstrap.min.js"></script>
