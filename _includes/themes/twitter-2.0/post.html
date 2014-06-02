@@ -3,17 +3,19 @@
 </div>
 
     {% assign author_info = site.data.authors[page.author] %}
-    <h4>Published on {{ page.date | date_to_long_string }} by <a href="{{ author_info.web }}">{{ page.author }}</a>  </h4>
+    <i class="fa fa-calendar"></i> {{ page.date | date_to_long_string }} <i class="fa fa-user"></i> <a href="{{ author_info.web }}">{{ page.author }}</a>
 
     {% unless page.tags == empty %}
       <div class="tag_box">
-      Tags:
+      <i class="fa fa-tags"></i> 
       {% assign tags_list_horizontal = page.tags %}
       {% include JB/tags_list_horizontal %}
       </div>
     {% endunless %}
     <hr>
     {{ content }}
+    <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='6778737'></div>
+
     <hr>
     <div class="pagination">
       <ul>
@@ -30,6 +32,7 @@
       {% endif %}
       </ul>
     </div>
+
 
     <hr>
     {% include util/adsense %}
