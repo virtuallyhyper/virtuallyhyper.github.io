@@ -30,35 +30,35 @@ Start -> Run -> servermanager.msc
 
 Actions -> Add Role
 
-![Add_roles](https://github.com/elatov/uploads/raw/master/2012/05/Add_roles.png)
+![Add_roles](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-Add_roles.png)
 
 #### 3. Click Next on the "Before you Begin" Screen
 
-![Before_you_begin](https://github.com/elatov/uploads/raw/master/2012/05/Before_you_begin.png)
+![Before_you_begin](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-Before_you_begin.png)
 
 #### 4. Select "File Services" Under "Select Server Roles"
 
-![select_file_server](https://github.com/elatov/uploads/raw/master/2012/05/select_file_server.png)
+![select_file_server](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-select_file_server.png)
 
 #### 5. Click Next on the "File Services" Screen
 
-![file_services](https://github.com/elatov/uploads/raw/master/2012/05/file_services.png)
+![file_services](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-file_services.png)
 
 #### 6. Select "Services For Network File System" under the second "Select Server Roles" screen
 
-![select_network_file_services](https://github.com/elatov/uploads/raw/master/2012/05/select_network_file_services.png)
+![select_network_file_services](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-select_network_file_services.png)
 
 #### 7. Click Install on the "Confirm Installation Selections" Screen
 
-![confirm_installation_selections](https://github.com/elatov/uploads/raw/master/2012/05/confirm_installation_selections.png)
+![confirm_installation_selections](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-confirm_installation_selections.png)
 
 #### 8. Check out the progress of the install
 
-![installation_progress](https://github.com/elatov/uploads/raw/master/2012/05/installation_progress.png)
+![installation_progress](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-installation_progress.png)
 
 #### 9. Click Close under the "Installation results
 
-![installation_confirmation](https://github.com/elatov/uploads/raw/master/2012/05/installation_confirmation.png)
+![installation_confirmation](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-installation_confirmation.png)
 
 ***Make sure the install is successful**
 
@@ -74,11 +74,11 @@ Start -> Run -> secpol.msc
 2.  Click on Security Options
 3.  Scroll down to "Network Access: Let Everyone permissions apply to anonymous users"
 
-![local_policy_settings](https://github.com/elatov/uploads/raw/master/2012/05/local_policy_settings.jpg)
+![local_policy_settings](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-local_policy_settings.jpg)
 
 #### 3. Enable "Let Everyone permissions apply to anonymous users"
 
-![enable_everyone_permission](https://github.com/elatov/uploads/raw/master/2012/05/enable_everyone_permission.jpg)
+![enable_everyone_permission](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-enable_everyone_permission.jpg)
 
 ### Create A folder to Share with NFS
 
@@ -93,7 +93,7 @@ In our example I created a folder called "nfs_share"
 
 ####
 
-![properties_of_folder](https://github.com/elatov/uploads/raw/master/2012/05/properties_of_folder.jpg)
+![properties_of_folder](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-properties_of_folder.jpg)
 
 #### 3.  Click "Manage NFS Sharing" of the Folder
 
@@ -102,7 +102,7 @@ In our example I created a folder called "nfs_share"
 3.  Set the Anonymous UID and GUI to '0'
 
 
-![nfs_sharing_properties](https://github.com/elatov/uploads/raw/master/2012/05/nfs_sharing_properties.jpg)
+![nfs_sharing_properties](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-nfs_sharing_properties.jpg)
 
 #### 4. Click Permissions From the "NFS Advanced Sharing" Window
 
@@ -110,7 +110,7 @@ In our example I created a folder called "nfs_share"
 2.  Check "Allow root access"
 
 
-![nfs_share_persmissions](https://github.com/elatov/uploads/raw/master/2012/05/nfs_share_persmissions.jpg)
+![nfs_share_persmissions](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-nfs_share_persmissions.jpg)
 
 #### 5. Click OK to apply the settings
 
@@ -122,21 +122,21 @@ Right Click on the folder and Select Properties
 
 #### 2. Select the Security Tab of the Properties
 
-![Security_tab_folder](https://github.com/elatov/uploads/raw/master/2012/05/Security_tab_folder.jpg)
+![Security_tab_folder](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-Security_tab_folder.jpg)
 
 #### 3. Click "Edit" on the Security Tab
 
-![edit_permissions_of_folder](https://github.com/elatov/uploads/raw/master/2012/05/edit_permissions_of_folder.jpg)
+![edit_permissions_of_folder](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-edit_permissions_of_folder.jpg)
 
 #### 4. Click "Add" to add a new User
 
 Type "Everyone" in the object Names and select "Check Names
 
-![Everyone_User](https://github.com/elatov/uploads/raw/master/2012/05/Everyone_User.jpg)
+![Everyone_User](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-Everyone_User.jpg)
 
 #### 6. Allow Full Control to Everyone
 
-![allow_full_control_to_everyone](https://github.com/elatov/uploads/raw/master/2012/05/allow_full_control_to_everyone.jpg)
+![allow_full_control_to_everyone](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-allow_full_control_to_everyone.jpg)
 
 ### Set the NFS server to be TCP Only
 
@@ -144,17 +144,17 @@ Type "Everyone" in the object Names and select "Check Names
 
 Start -> Run -> nfsmgmt.msc
 
-![nfs_mgmt_console](https://github.com/elatov/uploads/raw/master/2012/05/nfs_mgmt_console.jpg)
+![nfs_mgmt_console](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-nfs_mgmt_console.jpg)
 
 #### 2. Edit Settings of the NFS Server
 
 Right Click on "Server for NFS" and click properties
 
-![properties_of_nfs_server](https://github.com/elatov/uploads/raw/master/2012/05/properties_of_nfs_server.png)
+![properties_of_nfs_server](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-properties_of_nfs_server.png)
 
 #### 3. Change the Transport Protocol to be "TCP"
 
-![nfs_tcp_only](https://github.com/elatov/uploads/raw/master/2012/05/nfs_tcp_only.jpg)
+![nfs_tcp_only](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-05-nfs_tcp_only.jpg)
 
 #### 4. Restart the NFS Server
 

@@ -1006,7 +1006,7 @@ Running the following on the RH5 machine:
 
 and I saw the following warning:
 
-[<img src="https://github.com/elatov/uploads/raw/master/2014/04/mutt-ssl-warning.png" alt="mutt-ssl-warning" width="803" height="458" class="alignnone size-full wp-image-10692" />][3]
+[<img src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-mutt-ssl-warning.png" alt="mutt-ssl-warning" width="803" height="458" class="alignnone size-full wp-image-10692" />][3]
 
 After accepting the certificate, I saw my INBOX over IMAPS:
 
@@ -1110,6 +1110,6 @@ Here is the connection to the IMAP server over SSL with the **openssl** command:
     closed
 
  [1]: https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/pdf/Deployment_Guide/Red_Hat_Enterprise_Linux-6-Deployment_Guide-en-US.pdf
- [2]: https://github.com/elatov/uploads/raw/master/2014/04/mutt-connected-to-imap.png
- [3]: https://github.com/elatov/uploads/raw/master/2014/04/mutt-ssl-warning.png
- [4]: https://github.com/elatov/uploads/raw/master/2014/04/mutt-connected-to-imap1.png
+ [2]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-mutt-connected-to-imap.png
+ [3]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-mutt-ssl-warning.png
+ [4]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-mutt-connected-to-imap1.png

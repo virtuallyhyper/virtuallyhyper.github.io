@@ -15,7 +15,7 @@ tags:
 
 [US BrownBag Objective 1 slide deck](http://www.slideshare.net/ProfessionalVMware/professionalvmware-brownbag-jason-boche-vcapdcd-objective-1):
 
-![current-state-analysis](https://github.com/elatov/uploads/raw/master/2012/08/current-state-analysis.png)
+![current-state-analysis](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-current-state-analysis.png)
 
 ### Given a set of applications within a physical environment, determine the requirements for virtualization
 

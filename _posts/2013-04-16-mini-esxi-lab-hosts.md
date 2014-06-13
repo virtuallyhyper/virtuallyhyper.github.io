@@ -123,7 +123,7 @@ Over all I am happy these Mini hosts. They were cost effective and very quiet ho
   <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/04/mini-esxi-lab-hosts/" title=" Mini ESXi Lab Hosts" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:Mini ESXi Hosts,VMware Hardware,Whitebox,blog;button:compact;">Update 04/2013: I wrote this post back in August 2012, but never actually published it. I purchased the mini hosts and have been running them for 8 months with great...</a>
 </p>
 
- [1]: http://virtuallyhyper.com/wp-content/uploads/2012/08/apple_mac_mini_23ghz_core_i5_mid_2011_1109373_g1.jpg "Mini ESXi Lab Hosts"
- [2]: http://virtuallyhyper.com/wp-content/uploads/2012/08/Refurbished-Mac-mini-with-Lion-Server-2-specs.png "Mini ESXi Lab Hosts"
- [3]: http://virtuallyhyper.com/wp-content/uploads/2012/08/SH67H3.jpg "Mini ESXi Lab Hosts"
- [4]: http://virtuallyhyper.com/wp-content/uploads/2012/08/Antec-ISK-110-VESA-Front-View.png "Mini ESXi Lab Hosts"
+ [1]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-apple_mac_mini_23ghz_core_i5_mid_2011_1109373_g1.jpg "Mini ESXi Lab Hosts"
+ [2]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-Refurbished-Mac-mini-with-Lion-Server-2-specs.png "Mini ESXi Lab Hosts"
+ [3]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-SH67H3.jpg "Mini ESXi Lab Hosts"
+ [4]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-Antec-ISK-110-VESA-Front-View.png "Mini ESXi Lab Hosts"

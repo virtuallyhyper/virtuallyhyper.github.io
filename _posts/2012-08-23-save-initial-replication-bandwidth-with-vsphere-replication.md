@@ -55,7 +55,7 @@ With
 
 Now that the vmdk has been added from the template to the recovery site VM directory and we fixed the UUID, we can set up replication.
 
-<a href="http://virtuallyhyper.com/wp-content/uploads/2012/08/Initial-Copy-Confirmation-Seed-Disk.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2012/08/Initial-Copy-Confirmation-Seed-Disk.png']);"><img src="http://virtuallyhyper.com/wp-content/uploads/2012/08/Initial-Copy-Confirmation-Seed-Disk.png" alt="Initial Copy Confirmation Seed Disk Decrease Initial Replication Bandwidth and Time with vSphere Replication" title="Initial Copy Confirmation - Seed Disk" width="574" height="161" class="aligncenter size-full wp-image-2483" /></a>
+<a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-Initial-Copy-Confirmation-Seed-Disk.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-Initial-Copy-Confirmation-Seed-Disk.png']);"><img src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-Initial-Copy-Confirmation-Seed-Disk.png" alt="Initial Copy Confirmation Seed Disk Decrease Initial Replication Bandwidth and Time with vSphere Replication" title="Initial Copy Confirmation - Seed Disk" width="574" height="161" class="aligncenter size-full wp-image-2483" /></a>
 
 After configuring the replication we can check the replication state. In the output below we can see about 1.9MB transfered out of 1.1GB checksummed
 

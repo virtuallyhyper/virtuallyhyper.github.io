@@ -74,7 +74,7 @@ The output from this command indicates that the *IMS* service is not running cor
 
 I double checked that the service was running on the SQL server and verified that I could ping between servers. I verified the DNS resolution as well. I ran across <a href="http://communities.vmware.com/thread/426536" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://communities.vmware.com/thread/426536']);">a communities thread</a> where they were using dynamic ports on the SQL server. They had the same symptoms as I did, so I went to go check the port configuration on the SQL server. I discovered that the SQL server was statically assigned to **1433**.
 
-<img src="http://virtuallyhyper.com/wp-content/uploads/2013/02/SQL-TCP-ports.jpg" alt="SQL TCP ports vCenter 5.1 Service Fails to Start" width="395" height="435" class="aligncenter size-full wp-image-6310" title="vCenter 5.1 Service Fails to Start" />
+<img src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-02-SQL-TCP-ports.jpg" alt="SQL TCP ports vCenter 5.1 Service Fails to Start" width="395" height="435" class="aligncenter size-full wp-image-6310" title="vCenter 5.1 Service Fails to Start" />
 
 So I went back to the SSO server to confirm that it was configured on the correct port and that it has the correct address. <a href="http://kb.vmware.com/kb/2033516" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://kb.vmware.com/kb/2033516']);">This KB article</a> gave me the command to change the database configuration. I ran it with the correct information.
 

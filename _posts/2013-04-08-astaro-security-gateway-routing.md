@@ -65,7 +65,7 @@ So we can telnet to the port 2605 to configure **bgpd**:
     astaro8#
     
 
-Then, we can list the BGP neighbors (vgw-45c5243c in the <a href="http://virtuallyhyper.com/wp-content/uploads/2013/03/astaro-network-diagram.jpg" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2013/03/astaro-network-diagram.jpg']);">image</a> above):
+Then, we can list the BGP neighbors (vgw-45c5243c in the <a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-astaro-network-diagram.jpg" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-astaro-network-diagram.jpg']);">image</a> above):
 
     astaro8# show ip bgp sum
     BGP router identifier 169.254.249.26, local AS number 65000
@@ -194,4 +194,4 @@ We have confirmed the default routes are no longer being advertised.
   <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/04/astaro-security-gateway-routing/" title=" Astaro Security Gateway Routing" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:ASG,aws,BGP,blog;button:compact;">I had an issue where bringing up an Sophos Astaro Security Gateway (ASG) site-to-site VPN connection between VPC&#8217;s caused another connectivity across another VPN connection to fail. Looking into the...</a>
 </p>
 
- [1]: http://virtuallyhyper.com/wp-content/uploads/2013/03/astaro-network-diagram.jpg "Astaro AWS VPN Network Diagram"
+ [1]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-astaro-network-diagram.jpg "Astaro AWS VPN Network Diagram"

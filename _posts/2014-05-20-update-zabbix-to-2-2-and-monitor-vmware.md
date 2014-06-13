@@ -267,17 +267,17 @@ It's not much but it's a good start. There are already a couple of feature reque
  [4]: https://www.zabbix.com/forum/showthread.php?p=142941#post142941
  [5]: https://www.zabbix.com/forum/showpost.php?p=142098
  [6]: https://www.zabbix.com/documentation/2.2/manual/vm_monitoring
- [7]: https://github.com/elatov/uploads/raw/master/2014/04/def-inteface-vmware.png
- [8]: https://github.com/elatov/uploads/raw/master/2014/04/vm_host_macros.png
- [9]: https://github.com/elatov/uploads/raw/master/2014/04/vm_host_templates.png
- [10]: https://github.com/elatov/uploads/raw/master/2014/04/vmware-vms-discovered.png
- [11]: https://github.com/elatov/uploads/raw/master/2014/04/vmwarevm-discovered-detail.png
- [12]: https://github.com/elatov/uploads/raw/master/2014/04/added-calculated-items-hv.png
- [13]: https://github.com/elatov/uploads/raw/master/2014/04/hv-cpu-usage-percent.png
+ [7]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-def-inteface-vmware.png
+ [8]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-vm_host_macros.png
+ [9]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-vm_host_templates.png
+ [10]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-vmware-vms-discovered.png
+ [11]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-vmwarevm-discovered-detail.png
+ [12]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-added-calculated-items-hv.png
+ [13]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-hv-cpu-usage-percent.png
  [14]: https://www.zabbix.com/documentation/2.2/manual/config/items/itemtypes/simple_checks/vmware_keys
  [15]: https://www.zabbix.com/documentation/2.2/manual/config/items/itemtypes/calculated#usage_examples
- [16]: https://github.com/elatov/uploads/raw/master/2014/04/hv-template-triggers.png
+ [16]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-hv-template-triggers.png
  [17]: https://www.zabbix.com/documentation/2.2/manual/appendix/triggers/functions
- [18]: https://github.com/elatov/uploads/raw/master/2014/04/vmware-guest-keys.png
+ [18]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-vmware-guest-keys.png
  [19]: https://support.zabbix.com/browse/ZBXNEXT-2180
- [20]: https://github.com/elatov/uploads/raw/master/2014/04/cpu-usage-esx.png
+ [20]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-04-cpu-usage-esx.png
