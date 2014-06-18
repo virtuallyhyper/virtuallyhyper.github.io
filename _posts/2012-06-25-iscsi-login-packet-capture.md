@@ -678,9 +678,9 @@ At this point we have gone through a successful login phase and now we will see 
 
 At this point the iSCSI protocol will get pretty chatty and if you loaded the packet capture into wireshark, it will look something like this:
 
-![iscsi_1](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-04-iscsi_1.png)
+![iscsi_1](http://assets.virtuallyhyper.com/2012-04-iscsi_1.png)
 
-![iscsi_2](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-04-iscsi_2.png)
+![iscsi_2](http://assets.virtuallyhyper.com/2012-04-iscsi_2.png)
 
 You can also get a summary of all the iSCSI commands in a packet capture using tshark (starting with version [1.6](http://www.wireshark.org/news/20110607.html) ):
 
@@ -703,7 +703,7 @@ You can also get a summary of all the iSCSI commands in a packet capture using t
 	===========================================================
 
 
-For anyone that is interested, here is a [link](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-06-iscsi_login.pcap) to the packet capture that I grabbed during the iSCSI login process.
+For anyone that is interested, here is a [link](http://assets.virtuallyhyper.com/2012-06-iscsi_login.pcap) to the packet capture that I grabbed during the iSCSI login process.
 
 ### Related Posts
 

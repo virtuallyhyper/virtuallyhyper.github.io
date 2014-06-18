@@ -23,7 +23,7 @@ tags:
 ---
 I was recently working on case which had the following setup:
 
-![ESX-To-VNX](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-ESX-To-VNX.jpg)
+![ESX-To-VNX](http://assets.virtuallyhyper.com/2012-08-ESX-To-VNX.jpg)
 
 Over night the even hosts would start having a lot of disconnects and path changes/thrashing. On the array end we could see a lot of logins and logouts from the hosts as well. The configuration on the host side looked really good. We had two VMkernel interface setup with iSCSI NIC binding:
 
@@ -106,7 +106,7 @@ From the above output we could also see that Jumbo Frames were not utilized. Las
 
 Here is diagram from that same article:
 
-![vnx-iscsi-setup](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-vnx-iscsi-setup.png)
+![vnx-iscsi-setup](http://assets.virtuallyhyper.com/2012-08-vnx-iscsi-setup.png)
 
 We can confirm our configuration by looking inside the SW-iSCSI database. First dump the database into a text file:
 

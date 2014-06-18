@@ -13,7 +13,7 @@ tags:
 ---
 ### Determine and explain design decisions and options selected from the logical design
 
-From [this](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-04-vcap-dcd_notes.pdf) PDF:
+From [this](http://assets.virtuallyhyper.com/2013-04-vcap-dcd_notes.pdf) PDF:
 
 > **Physical Design**
 >
@@ -23,7 +23,7 @@ From [this](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-04-vc
 
 Here is an example of a physical diagram, taken from "[VMware vCloud Implementation Example](http://www.vmware.com/files/pdf/VMware-vCloud-Implementation-Example-ServiceProvider.pdf)":
 
-![physical-design-diag](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-physical-design-diag.png)
+![physical-design-diag](http://assets.virtuallyhyper.com/2012-08-physical-design-diag.png)
 
 ### Build functional requirements into the physical design
 
@@ -33,7 +33,7 @@ Let's say we had a need for a DMZ, if this was the case, then we would either ge
 
 Let's say we looked at some of the previous logical diagrams:
 
-![logical-diagram](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-logical-diagram.png)
+![logical-diagram](http://assets.virtuallyhyper.com/2012-08-logical-diagram.png)
 
 Now our physical diagram would include:
 

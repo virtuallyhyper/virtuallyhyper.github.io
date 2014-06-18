@@ -30,7 +30,7 @@ I came across a really strange issue today with one of my customers. A VM would 
 ## DVS Configuration
 
 <div id="attachment_500" style="width: 233px" class="wp-caption alignnone">
-  <a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_55-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_55-PM.png']);"><img class="size-full wp-image-500" title="DVS Configuration" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_55-PM.png" alt="Screenshot 3 26 2012 8 06 55 PM VLAN issue with IBM VFA, be2net driver, and DVS" width="223" height="47" /></a><p class="wp-caption-text">
+  <a href="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_55-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_55-PM.png']);"><img class="size-full wp-image-500" title="DVS Configuration" src="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_55-PM.png" alt="Screenshot 3 26 2012 8 06 55 PM VLAN issue with IBM VFA, be2net driver, and DVS" width="223" height="47" /></a><p class="wp-caption-text">
     DVS Configuration
   </p>
 </div>
@@ -38,7 +38,7 @@ I came across a really strange issue today with one of my customers. A VM would 
 ## dvPortgroup Configuration
 
 <div id="attachment_499" style="width: 310px" class="wp-caption alignnone">
-  <a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_28-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_28-PM.png']);"><img class="size-medium wp-image-499" title="dvPortgroup Configuration" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_06_28-PM-300x227.png" alt="Screenshot 3 26 2012 8 06 28 PM 300x227 VLAN issue with IBM VFA, be2net driver, and DVS" width="300" height="227" /></a><p class="wp-caption-text">
+  <a href="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_28-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_28-PM.png']);"><img class="size-medium wp-image-499" title="dvPortgroup Configuration" src="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_06_28-PM-300x227.png" alt="Screenshot 3 26 2012 8 06 28 PM 300x227 VLAN issue with IBM VFA, be2net driver, and DVS" width="300" height="227" /></a><p class="wp-caption-text">
     dvPortgroup Configuration
   </p>
 </div>
@@ -46,7 +46,7 @@ I came across a really strange issue today with one of my customers. A VM would 
 ## dvUplink Portgroup Configuration
 
 <div id="attachment_501" style="width: 310px" class="wp-caption alignnone">
-  <a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_07_53-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_07_53-PM.png']);"><img class="size-medium wp-image-501" title="DVUplink Portgroup Configuration" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-Screenshot-3_26_2012-8_07_53-PM-300x227.png" alt="Screenshot 3 26 2012 8 07 53 PM 300x227 VLAN issue with IBM VFA, be2net driver, and DVS" width="300" height="227" /></a><p class="wp-caption-text">
+  <a href="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_07_53-PM.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_07_53-PM.png']);"><img class="size-medium wp-image-501" title="DVUplink Portgroup Configuration" src="http://assets.virtuallyhyper.com/2012-03-Screenshot-3_26_2012-8_07_53-PM-300x227.png" alt="Screenshot 3 26 2012 8 07 53 PM 300x227 VLAN issue with IBM VFA, be2net driver, and DVS" width="300" height="227" /></a><p class="wp-caption-text">
     DVUplink Portgroup Configuration
   </p>
 </div>

@@ -38,15 +38,15 @@ I recently ran into this great study guide for RHCSA and RHCE entitled [Hands-on
 
 Each chapter has hands on examples and they depend on this setup:
 
-![rhc lab layout RHCSA and RHCE Study Guide](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-12-rhc_lab_layout.png)
+![rhc lab layout RHCSA and RHCE Study Guide](http://assets.virtuallyhyper.com/2012-12-rhc_lab_layout.png)
 
 Here is the disk lay out of the machines:
 
-![rhc part layout RHCSA and RHCE Study Guide](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-12-rhc_part_layout.png)
+![rhc part layout RHCSA and RHCE Study Guide](http://assets.virtuallyhyper.com/2012-12-rhc_part_layout.png)
 
 And here is a good diagram on how the networking is setup:
 
-![rhc net diagram RHCSA and RHCE Study Guide](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-12-rhc_net_diagram.png)
+![rhc net diagram RHCSA and RHCE Study Guide](http://assets.virtuallyhyper.com/2012-12-rhc_net_diagram.png)
 
 All of the above were taken from [here](http://ptgmedia.pearsoncmg.com/images/9780321767950/samplepages/0321767950.pdf).
 

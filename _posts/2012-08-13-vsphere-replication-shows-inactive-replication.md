@@ -22,11 +22,11 @@ I was messing around in my SRM lab and ran into this issue. It is a common issue
 
 I set up replication for the VM, failed it over to the other site. I then removed replication cleaned up the protection group and recovery plan. After a little while I configured replication from the recovery site to the protected site. In the middle of configuring replication, my protected site host dropped out of vCenter. After getting everything on-line again I was able to configure replication on the VM. I went to check the replication status in the GUI and found it stuck in the &#8220;not active&#8221;.
 
-<a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-VRMS-replication-not-active.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-VRMS-replication-not-active.png']);"><img class="aligncenter size-full wp-image-2163" title="VRMS replication not active" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-VRMS-replication-not-active.png" alt="VRMS replication not active vSphere Replication Shows Replication as not active" width="656" height="59" /></a>
+<a href="http://assets.virtuallyhyper.com/2012-08-VRMS-replication-not-active.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-08-VRMS-replication-not-active.png']);"><img class="aligncenter size-full wp-image-2163" title="VRMS replication not active" src="http://assets.virtuallyhyper.com/2012-08-VRMS-replication-not-active.png" alt="VRMS replication not active vSphere Replication Shows Replication as not active" width="656" height="59" /></a>
 
 The first thing I did was try to &#8220;synchronize now&#8221;, but this failed immediately telling me &#8220;An ongoing Synchronization task already exists&#8221;.
 
-<a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-ongoing-sync-on-VRMS.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-ongoing-sync-on-VRMS.png']);"><img class="aligncenter size-full wp-image-2164" title="ongoing sync on VRMS" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-ongoing-sync-on-VRMS.png" alt="ongoing sync on VRMS vSphere Replication Shows Replication as not active" width="827" height="408" /></a>
+<a href="http://assets.virtuallyhyper.com/2012-08-ongoing-sync-on-VRMS.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-08-ongoing-sync-on-VRMS.png']);"><img class="aligncenter size-full wp-image-2164" title="ongoing sync on VRMS" src="http://assets.virtuallyhyper.com/2012-08-ongoing-sync-on-VRMS.png" alt="ongoing sync on VRMS vSphere Replication Shows Replication as not active" width="827" height="408" /></a>
 
 So I went to the ESXi host to take a look at the replication status on the VM. What I found was that there is a full sync in progress, but the progress was at 0%.
 
@@ -140,7 +140,7 @@ Above we can see that 501d996c-86c66169-eea2-005056b007c1 is mounted as the &#82
 
 So it looks like VRS cannot log into the host. To alleviate this I went in and re-registered the VRS.
 
-<a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-SRM-5-Register-VRS.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-SRM-5-Register-VRS.png']);"><img class="aligncenter size-full wp-image-2169" title="SRM 5 Register VRS" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-SRM-5-Register-VRS.png" alt="SRM 5 Register VRS vSphere Replication Shows Replication as not active" width="891" height="408" /></a>
+<a href="http://assets.virtuallyhyper.com/2012-08-SRM-5-Register-VRS.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://assets.virtuallyhyper.com/2012-08-SRM-5-Register-VRS.png']);"><img class="aligncenter size-full wp-image-2169" title="SRM 5 Register VRS" src="http://assets.virtuallyhyper.com/2012-08-SRM-5-Register-VRS.png" alt="SRM 5 Register VRS vSphere Replication Shows Replication as not active" width="891" height="408" /></a>
 
 After the operation finished, we can see in the VRS logs that it logged into the host and detected the datastores.
 

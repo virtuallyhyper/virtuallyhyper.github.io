@@ -17,7 +17,7 @@ tags:
 ---
 I was recently setting up an ESX and ESXi host on my local VMware Workstation, however whatever I tried I couldn't get the ESX host to reply to pings. I setup the ESX and ESXi host to use the NAT network from the VMware Workstation. Here is how the NAT settings looked like from the Virtual Network Editor:
 
-![Virtual_network_Editor](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-04-Virtual_network_Editor.png)
+![Virtual_network_Editor](http://assets.virtuallyhyper.com/2012-04-Virtual_network_Editor.png)
 
 Here is the local interface on my laptop that is used for the NAT.
 

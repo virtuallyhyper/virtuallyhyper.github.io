@@ -41,7 +41,7 @@ I recently ran into an issue with the VMware VDR appliance. The Integrity Check 
 
 We logged into the VDR appliance and looked under the Reports Tab and we saw the following:
 
-![recatalog_fails_1](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-recatalog_fails_1.png)
+![recatalog_fails_1](http://assets.virtuallyhyper.com/2012-08-recatalog_fails_1.png)
 
 VMware KB [2014249](http://kb.vmware.com/kb/2014249) talks about this:
 
@@ -230,11 +230,11 @@ I then ran across VMware KB [2013450](http://kb.vmware.com/kb/2013450), which ha
 
 After removing the original entries from datarecovery.ini file and replacing them with the above, the backup started to work. We left the backup job running for a couple of days and it was successful for a couple of days, but one of the days it failed with the following:
 
-![failed_to_backup_cause_of_quiesce_1](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-failed_to_backup_cause_of_quiesce_1.png)
+![failed_to_backup_cause_of_quiesce_1](http://assets.virtuallyhyper.com/2012-08-failed_to_backup_cause_of_quiesce_1.png)
 
 Looking inside the Guest Operating System Event Viewer we saw the following:
 
-![failed_to_flush](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-failed_to_flush.png)
+![failed_to_flush](http://assets.virtuallyhyper.com/2012-08-failed_to_flush.png)
 
 Searching for that error, I came across Symantec Tech Article [127767](http://www.symantec.com/docs/TECH127767). It talks about the following:
 
@@ -255,7 +255,7 @@ Searching for that error, I came across Symantec Tech Article [127767](http://ww
 
 All was well for a while, but then one day one of the Integrity check failed again. Here is what we saw in the reports tabs of VDR.
 
-![vdr-int-check-failing](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-vdr-int-check-failing.png)
+![vdr-int-check-failing](http://assets.virtuallyhyper.com/2012-08-vdr-int-check-failing.png)
 We logged into the appliance again and checking out the */var/vmware/datarecovery/datarecovery-0.log*, we saw the following:
 
 
