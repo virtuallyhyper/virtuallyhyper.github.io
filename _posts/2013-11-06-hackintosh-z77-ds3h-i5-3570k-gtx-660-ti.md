@@ -201,7 +201,7 @@ All in all, this was a fun project and I got exactly what I wanted out of it: a 
   <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/11/hackintosh-z77-ds3h-i5-3570k-gtx-660-ti/" title=" Hackintosh: Z77-DS3H, i5-3570K, GTX 660 Ti" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:Hackintosh,MultiBeast,UniBeast,blog;button:compact;">Ivy Bridge Hackintosh running OSX 10.8.4 (Mountain Lion): Z77-DS3H, i5-3570K, GTX 660 Ti This is a guide on how I built my first hackintosh. Why? I wanted a desktop that...</a>
 </p>
 
- [1]: http://virtuallyhyper.com/wp-content/uploads/2013/09/D2Wr4Un.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"
+ [1]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-09-D2Wr4Un.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"
  [2]: http://i.imgur.com/tn2pdCI.png "MultiBeast Settings Screenshot"
- [3]: http://virtuallyhyper.com/wp-content/uploads/2013/09/hackintosh-bios4.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"
- [4]: http://virtuallyhyper.com/wp-content/uploads/2013/09/hackintosh-bios5.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"
+ [3]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-09-hackintosh-bios4.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"
+ [4]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-09-hackintosh-bios5.png "Hackintosh: Z77 DS3H, i5 3570K, GTX 660 Ti"

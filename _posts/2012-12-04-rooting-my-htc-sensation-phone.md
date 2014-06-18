@@ -35,7 +35,7 @@ Most of the above links, of course, recommended backing up your data just in cas
 
 I then went to my phone and saw the following screen:
 
-![phone_backup](https://github.com/elatov/uploads/raw/master/2012/12/phone_backup.png)
+![phone_backup](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-12-phone_backup.png)
 
 I didn't enter any password and just hit "Back up my data" and the back up process started. In the end, I had the following:
 
