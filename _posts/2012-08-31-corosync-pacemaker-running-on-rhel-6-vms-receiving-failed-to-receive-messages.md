@@ -36,7 +36,7 @@ I ran into in an interesting issue with Corosync Pacemaker. Before we get down t
 
 It's basically clustering software used with Linux to load balance applications, like Apache and the sorts. Here is a step by step [Pacemaker Architecture](http://www.clusterlabs.org/doc/en-US/Pacemaker/1.1/html/Clusters_from_Scratch/)" page, from that page is an example of one setup:
 
-![pacemaker_archi](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-pacemaker_archi.png)
+![pacemaker_archi](http://assets.virtuallyhyper.com/2012-08-pacemaker_archi.png)
 
 The way that Corosync keeps track of nodes is by using Multicast Traffic. As a result certain configuration needs to be done on the physical switch. For more information check out "[Using IP Multicast with VMware ESX 3.5](https://github.com/corosync/corosync/wiki/Corosync-and-Cisco-switches)" (even though we were using ESX 4.x, the way that multicast works is the same across 3.x or 4.x). From that article:
 
@@ -48,7 +48,7 @@ The way that Corosync keeps track of nodes is by using Multicast Traffic. As a r
 
 We were using IGMPv3 Snooping on the upstream switch and per "[Cisco VMware Virtualizing the Datacenter](http://www.vmware.com/files/pdf/technology/cisco_vmware_virtualizing_the_datacenter.pdf)", we see the following:
 
-![igmp_snooping_vswitch](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-08-igmp_snooping_vswitch.png)
+![igmp_snooping_vswitch](http://assets.virtuallyhyper.com/2012-08-igmp_snooping_vswitch.png)
 
 The document makes it seem that the VMware Virtual Switches don't support IGMPv3 Snooping and that is not the case, if you keep reading the document, you will see the following:
 

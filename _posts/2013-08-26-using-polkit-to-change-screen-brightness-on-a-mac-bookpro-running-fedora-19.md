@@ -135,7 +135,7 @@ PolicyKit has gone through a lot of changes and is now called PolKit. From the s
 
 From [this](http://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html) freedesktop page, here is a good architecture of PolKit:
 
-![polkit arch Using PolKit to Change Screen Brightness on a Mac BookPro Running Fedora 19](https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-08-polkit_arch.png)
+![polkit arch Using PolKit to Change Screen Brightness on a Mac BookPro Running Fedora 19](http://assets.virtuallyhyper.com/2013-08-polkit_arch.png)
 
 From the initial Arch wiki page, here is the structure of PolKit:
 

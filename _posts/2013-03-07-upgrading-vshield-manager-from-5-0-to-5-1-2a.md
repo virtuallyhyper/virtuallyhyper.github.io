@@ -125,13 +125,13 @@ Once the operation has completed, log into the web client again and confirm the 
   <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/03/upgrading-vshield-manager-from-5-0-to-5-1-2a/" title=" Upgrading vShield Manager from 5.0 to 5.1.2a" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:#vCNS,#vShieldManager,#vShieldUpgrade,VMware,blog;button:compact;">Recently I had to upgrade a vCloud Director (vCD) instance from 1.5 to 5.1.1. One of the dependencies of the upgrade is vShield Manager, so I upgraded it. Requirements for...</a>
 </p>
 
- [1]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Space.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [2]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Upload-Settings.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [3]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-manager-Upgrade-Invalid-File.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [4]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Upgrade-Install-Maintenance-bundle.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [5]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Space-after-Maintenance.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [6]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-install-upgrade.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [7]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-post-upgrade.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [8]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Backup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [9]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-setup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
- [10]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2013-03-vShield-Manager-Restore-Backup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [1]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Space.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [2]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Upload-Settings.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [3]: http://assets.virtuallyhyper.com/2013-03-vShield-manager-Upgrade-Invalid-File.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [4]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Upgrade-Install-Maintenance-bundle.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [5]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Space-after-Maintenance.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [6]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-install-upgrade.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [7]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-post-upgrade.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [8]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Backup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [9]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-setup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"
+ [10]: http://assets.virtuallyhyper.com/2013-03-vShield-Manager-Restore-Backup.jpg "Upgrading vShield Manager from 5.0 to 5.1.2a"

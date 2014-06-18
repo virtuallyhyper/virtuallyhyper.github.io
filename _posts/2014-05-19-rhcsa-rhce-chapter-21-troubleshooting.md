@@ -752,25 +752,25 @@ There are many more things to try if you are trying a specific application. You 
 
  [1]: https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/pdf/Installation_Guide/Red_Hat_Enterprise_Linux-6-Installation_Guide-en-US.pdf
  [2]: /2013/01/rhcsa-and-rhce-chapter-2-system-initialization/
- [3]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-grub-menu.png
- [4]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-grub-menu-after-e.png
- [5]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-kernel-line-menu.png
- [6]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-single-appended.png
- [7]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-single-user-mode-booted.png
- [8]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-password-reset.png
- [9]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-dvd-booted.png
- [10]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-select-lang.png
- [11]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-keyb-sel.png
- [12]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-res-metho.png
- [13]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-select-net.png
- [14]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-attempt-moount.png
- [15]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-success-mount-linux.png
- [16]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-boot-cd-mounted-linux.png
- [17]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-first-aide-quickstart-menu.png
- [18]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-shell-dropped.png
- [19]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-res-chroot-pass-reset.png
- [20]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-grub-reinstall-p1.png
- [21]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-mbr-reinstall-p2.png
- [22]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-grub-install.png
- [23]: https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2014-05-fsck-lvm.png
+ [3]: http://assets.virtuallyhyper.com/2014-05-grub-menu.png
+ [4]: http://assets.virtuallyhyper.com/2014-05-grub-menu-after-e.png
+ [5]: http://assets.virtuallyhyper.com/2014-05-kernel-line-menu.png
+ [6]: http://assets.virtuallyhyper.com/2014-05-single-appended.png
+ [7]: http://assets.virtuallyhyper.com/2014-05-single-user-mode-booted.png
+ [8]: http://assets.virtuallyhyper.com/2014-05-password-reset.png
+ [9]: http://assets.virtuallyhyper.com/2014-05-dvd-booted.png
+ [10]: http://assets.virtuallyhyper.com/2014-05-boot-cd-select-lang.png
+ [11]: http://assets.virtuallyhyper.com/2014-05-boot-cd-keyb-sel.png
+ [12]: http://assets.virtuallyhyper.com/2014-05-boot-cd-res-metho.png
+ [13]: http://assets.virtuallyhyper.com/2014-05-boot-cd-select-net.png
+ [14]: http://assets.virtuallyhyper.com/2014-05-boot-cd-attempt-moount.png
+ [15]: http://assets.virtuallyhyper.com/2014-05-boot-cd-success-mount-linux.png
+ [16]: http://assets.virtuallyhyper.com/2014-05-boot-cd-mounted-linux.png
+ [17]: http://assets.virtuallyhyper.com/2014-05-first-aide-quickstart-menu.png
+ [18]: http://assets.virtuallyhyper.com/2014-05-shell-dropped.png
+ [19]: http://assets.virtuallyhyper.com/2014-05-res-chroot-pass-reset.png
+ [20]: http://assets.virtuallyhyper.com/2014-05-grub-reinstall-p1.png
+ [21]: http://assets.virtuallyhyper.com/2014-05-mbr-reinstall-p2.png
+ [22]: http://assets.virtuallyhyper.com/2014-05-grub-install.png
+ [23]: http://assets.virtuallyhyper.com/2014-05-fsck-lvm.png
  [24]: /2013/01/rhcsa-and-rhce-chapter-5-networking/
