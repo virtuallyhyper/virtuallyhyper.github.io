@@ -61,7 +61,7 @@ Now, we should test connectivity with the other vmnic in the team. To explicitly
 In the portgroup settings, you can set vmnic3 to unused and vmnic2 to active to force any VMs within the VM Network portgroup to bind to vmnic2. Here is an example:
 
 <div id="attachment_341" style="width: 528px" class="wp-caption alignnone">
-  <a href="http://virtuallyhyper.com/wp-content/uploads/2012/03/ScreenClip.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/wp-content/uploads/2012/03/ScreenClip.png']);"><img class="size-full wp-image-341" title="Portgroup Properties" src="http://virtuallyhyper.com/wp-content/uploads/2012/03/ScreenClip.png" alt="ScreenClip Virtual Machine Gets Disconnected After vMotion" width="518" height="648" /></a><p class="wp-caption-text">
+  <a href="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-ScreenClip.png" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-ScreenClip.png']);"><img class="size-full wp-image-341" title="Portgroup Properties" src="https://googledrive.com/host/0BxotWZXnwSAGSS1qRE02eWVrU28/2012-03-ScreenClip.png" alt="ScreenClip Virtual Machine Gets Disconnected After vMotion" width="518" height="648" /></a><p class="wp-caption-text">
     Portgroup Properties
   </p>
 </div>
