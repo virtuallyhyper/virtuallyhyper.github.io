@@ -86,7 +86,7 @@ Now let's copy the initial configuration over:
 Edit the main configuration file **/usr/local/snort/etc/snort.conf** and modify the following:
 
     ipvar HOME_NET 192.168.0.0/16,10.0.0.0/8
-    ipvar EXTERNAL_NET !HOME_NET
+    ipvar EXTERNAL_NET !$HOME_NET
     var RULE_PATH ./rules
     var WHITE_LIST_PATH ./rules
     var BLACK_LIST_PATH ./rules
