@@ -1,19 +1,21 @@
 ---
-title: 'Hackintosh: Z77-DS3H, i5-3570K, GTX 660 Ti'
+title: "Hackintosh: Z77-DS3H, i5-3570K, GTX 660 Ti"
 author: Joe Chan
 layout: post
-permalink: /2013/11/hackintosh-z77-ds3h-i5-3570k-gtx-660-ti/
-dsq_thread_id:
+permalink: "/2013/11/hackintosh-z77-ds3h-i5-3570k-gtx-660-ti/"
+dsq_thread_id: 
   - 1744045957
-sharing_disabled:
+sharing_disabled: 
   - 1
-categories:
+categories: 
   - OS
-tags:
+tags: 
   - Hackintosh
   - MultiBeast
   - UniBeast
+published: true
 ---
+
 ## Ivy Bridge Hackintosh running OSX 10.8.4 (Mountain Lion): Z77-DS3H, i5-3570K, GTX 660 Ti
 
 This is a guide on how I built my first hackintosh.
@@ -196,6 +198,10 @@ All in all, this was a fun project and I got exactly what I wanted out of it: a 
 
 *   <a href="http://www.tonymacx86.com/desktop-compatibility/77447-ar8161-lan-new-mobo-revisions-ga-z77-ds3h-ga-h77-ds3h-others.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.tonymacx86.com/desktop-compatibility/77447-ar8161-lan-new-mobo-revisions-ga-z77-ds3h-ga-h77-ds3h-others.html']);">Big thread on DS3H rev 1.1 onboard AR8161 NIC issue</a>
 *   <a href="http://www.tonymacx86.com/mountain-lion-desktop-support/90804-ga-z77-ds3h-sleep-not-working-all-help.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://www.tonymacx86.com/mountain-lion-desktop-support/90804-ga-z77-ds3h-sleep-not-working-all-help.html']);">Sleep issue</a>
+
+## Update to OSX 10.9 (Mavericks)
+
+I have updated to 10.9 and had random freezes (nothing peculiar in `system.log`) until I turned off memory overclocking (X.M.P)...
 
 <p class="wp-flattr-button">
   <a class="FlattrButton" style="display:none;" href="http://virtuallyhyper.com/2013/11/hackintosh-z77-ds3h-i5-3570k-gtx-660-ti/" title=" Hackintosh: Z77-DS3H, i5-3570K, GTX 660 Ti" rev="flattr;uid:virtuallyhyper;language:en_GB;category:text;tags:Hackintosh,MultiBeast,UniBeast,blog;button:compact;">Ivy Bridge Hackintosh running OSX 10.8.4 (Mountain Lion): Z77-DS3H, i5-3570K, GTX 660 Ti This is a guide on how I built my first hackintosh. Why? I wanted a desktop that...</a>
