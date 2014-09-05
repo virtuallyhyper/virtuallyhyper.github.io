@@ -1,18 +1,28 @@
 ---
-title: CORS with CloudFront, S3, and Multiple Domains
+title: "CORS with CloudFront, S3, and Multiple Domains"
 author: Joe Chan
 layout: post
-permalink: /2013/08/cors-with-cloudfront-s3-and-multiple-domains/
-dsq_thread_id:
+permalink: "/2013/08/cors-with-cloudfront-s3-and-multiple-domains/"
+dsq_thread_id: 
   - 1590044900
-categories:
+categories: 
   - AWS
-tags:
+tags: 
   - aws
   - cloudfront
   - cors
   - s3
+published: true
 ---
+
+**Update**: As of [this announcement](https://aws.amazon.com/about-aws/whats-new/2014/06/26/amazon-cloudfront-device-detection-geo-targeting-host-header-cors/) posted Jun 26, 2014, you can now whitelist the `Origin` header which is the best solution to this issue.
+
+> Cross Origin Resource Sharing (CORS): You can now configure Amazon CloudFront to cache content based on the Origin Header. This means Amazon CloudFront will respect any CORS rules that your origin server has set up to provide access to the websites you want.
+
+If you configure your CloudFront distribution to whitelist the `Origin` header, Cloudfront will cache a separate response with the expected `Access-Control-Allow-Origin` for each request that carries a different `Origin` header. More information about this can be found [here](http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html).
+
+--------------------------------------------------------------------------------
+
 Here is a tutorial on how to set up CORS with AWS S3, CloudFront and multiple domains.
 
 ## What is CORS?
@@ -57,8 +67,7 @@ In other words, there are 2 ways for resources to be shared with multiple Origin
 In order to allow access from multiple domains, our S3 CORS policy has this wildcard (*) in the CORS configuration line:
 
                 <AllowedOrigin>*</AllowedOrigin>
-    
-
+                
 S3 returns `Vary: Origin` in the HTTP response header because it dynamically generates the CORS HTTP response to every request based on the `Origin` header from the HTTP request. You can tell from the **curl** HTTP response headers below, namely `Access-Control-Allow-Origin: https://origin1.joeataws.info`:
 
     [20:36:00]$ curl -sI -H "Origin: https://origin1.joeataws.info" -H "Access-Control-Request-Method: GET" supernocarebucket.s3.amazonaws.com/public.txt
@@ -85,7 +94,7 @@ CloudFront doesn&#8217;t offer support for `Vary: Origin`, and will cache whatev
 
 So how do you work around this and allow CloudFront to differentiate between different domains and the `Origin` headers they send?
 
-**Enable the query string forwarding on your CloudFront distribution and use a unique query string for every domain you plan on sharing resources with.**
+~~**Enable the query string forwarding on your CloudFront distribution and use a unique query string for every domain you plan on sharing resources with.**~~ **Whitelist the Origin request header per the update at the top of this post instead.**
 
 CloudFront will cache a seperate object for every query string parameter.
 
