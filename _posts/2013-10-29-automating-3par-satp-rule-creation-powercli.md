@@ -20,17 +20,17 @@ Recently I was working with a customer to install a new 3PAR array and migrate V
 *   Use Persona 11 for VMware LUNs on HP 3PAR OS 3.1.2 and above
 *   Add a SATP rule to the ESX host to allow the following 
     *   Setting the default Path Selection Policy (PSP) to Round Robin (VMW\_PSP\_RR)
-    *   Setting the default Round Robin IOPS option to 100 instead of 1000
+    *   Setting the default Round Robin IOPS option to 1 instead of 1000
     *   Setting the default SATP for 3PAR as ALUA (VMW\_SATP\_ALUA)
 
 The best practice for the array is to add a new SATP rule on each host to allocate the correct SATP for the 3PAR LUNs. The other way would be to change the default PSP for the SATP which we covered in <a href="http://virtuallyhyper.com/2012/03/changing-the-path-selection-policy-to-round-robin/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/2012/03/changing-the-path-selection-policy-to-round-robin/']);">this post</a>. Since we want to change the IOPS property and ensure that the new LUNs are claimed properly we will create the new SATP rule. The command for creating this SATP rule for host persona 11 is as follow.
 
-    # esxcli storage nmp satp rule add -s "VMW_SATP_ALUA" -P "VMW_PSP_RR" -O iops=100 -c "tpgs_on" -V "3PARdata" -M "VV" -e "HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule"
+    # esxcli storage nmp satp rule add -s "VMW_SATP_ALUA" -P "VMW_PSP_RR" -O iops=1 -c "tpgs_on" -V "3PARdata" -M "VV" -e "HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule"
     
 
 For host persona 6 the following command would be run.
 
-    # esxcli storage nmp satp rule add -s "VMW_SATP_DEFAULT_AA" -P "VMW_PSP_RR" -O iops=100 -c "tpgs_off" -V "3PARdata" -M "VV" -e "HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule"
+    # esxcli storage nmp satp rule add -s "VMW_SATP_DEFAULT_AA" -P "VMW_PSP_RR" -O iops=1 -c "tpgs_off" -V "3PARdata" -M "VV" -e "HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule"
     
 
 The difference between the rules is that host persona 11 is ALUA, where as host persona 6 is Active/Active. <a href="http://virtuallyhyper.com/2012/04/seeing-a-high-number-of-trespasses-from-a-clariion-array-with-esx-hosts/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://virtuallyhyper.com/2012/04/seeing-a-high-number-of-trespasses-from-a-clariion-array-with-esx-hosts/']);">This post</a> explains ALUA in further detail.
@@ -44,7 +44,7 @@ I went searching around for a solution for PowerCli and found <a href="http://te
 
 So we need to fill in the appropriate values for our SATP rule and send in *$null* for the options we want to omit. I came up with the following command to add the rule as per the best practices.
 
-    PowerCLI C:\> $esxcli.storage.nmp.satp.rule.add($null,"tpgs_on","HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule",$null,$null,$null,"VV",$null,"VMW_PSP_RR","iops=100","VMW_SATP_ALUA",$null,$null,"3PARdata")
+    PowerCLI C:\> $esxcli.storage.nmp.satp.rule.add($null,"tpgs_on","HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule",$null,$null,$null,"VV",$null,"VMW_PSP_RR","iops=1","VMW_SATP_ALUA",$null,$null,"3PARdata")
     true
     
 
@@ -61,7 +61,7 @@ As you can see in the example above, it returned *true* when I ran the command. 
     Model        : VV
     Name         : VMW_SATP_ALUA
     Options      :
-    PSPOptions   : iops=100
+    PSPOptions   : iops=1
     RuleGroup    : user
     Transport    :
     Vendor       : 3PARdata
@@ -77,7 +77,7 @@ Great that worked, but I have no interest in running this manually on each host,
         # List HP SATP rules
         # $esxcli.storage.nmp.satp.rule.list() | where {$_.description -like "*HP*"}
         # Create A new satp rule for 3PAR
-        $result = $esxcli.storage.nmp.satp.rule.add($null,"tpgs_on","HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule",$null,$null,$null,"VV",$null,"VMW_PSP_RR","iops=100","VMW_SATP_ALUA",$null,$null,"3PARdata")
+        $result = $esxcli.storage.nmp.satp.rule.add($null,"tpgs_on","HP 3PAR Custom iSCSI/FC/FCoE ALUA Rule",$null,$null,$null,"VV",$null,"VMW_PSP_RR","iops=1","VMW_SATP_ALUA",$null,$null,"3PARdata")
         # List 3PAR Rules
         # $esxcli.storage.nmp.satp.rule.list() | where {$_.description -like "*3par*"}
          Write-Host "Host:", $esx.Name, "Result", $result
