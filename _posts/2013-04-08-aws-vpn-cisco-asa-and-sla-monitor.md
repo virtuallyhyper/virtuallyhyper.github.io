@@ -14,8 +14,9 @@ tags:
 published: true
 ---
 
-2015-01-29 Updates: Setting up SLA monitors to the `169.254.x.x` addresse(s) and the VPC default gateway at the base of the VPC network range “plus one” (i.e. `10.0.0.1` for `10.0.0.0/16` networks) is no longer recommended.
+*2015-01-29 Updates: Setting up SLA monitors to the `169.254.x.x` addresse(s) and the VPC default gateway at the base of the VPC network range “plus one” (i.e. `10.0.0.1` for `10.0.0.0/16` networks) is no longer recommended.*
 
+--------------------------------------------------------------------------------
 When configuring the AWS VPC VPN with a Cisco ASA, Amazon recommends that you configure SLA monitoring.
 
 In the pregenerated Cisco ASA configuration downloaded from the AWS VPN Management console (In your AWS VPC Management Console, click on **VPN Connections**, Right Click on your VPN connection, and click **Download Configuration**), you&#8217;ll see something similar to [the example config](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/Cisco_ASA.html#Cisco_ASA_details). In the config, you may see some lines like this:
@@ -67,9 +68,9 @@ On the ASA, it&#8217;s comes from lines like this in the config (note that by de
 
 From the configuration above, there are 3 recommendations for a good SLA monitor target:
 
-1. > This traffic needs to be sent to a target that will return a response.
-1. > A possible destination for the ping is an instance within the VPC.
-1. > For redundancy multiple SLA monitors can be configured to several instances to protect against a single point of failure.
+1. This traffic needs to be sent to a target that will return a response.
+1. A possible destination for the ping is an instance within the VPC.
+1. For redundancy multiple SLA monitors can be configured to several instances to protect against a single point of failure.
 
 As such, I would recommend configuring 2 VPC instances that respond to pings from the ASA along with 2 SLA monitors, one targeting each of the instances.
 
