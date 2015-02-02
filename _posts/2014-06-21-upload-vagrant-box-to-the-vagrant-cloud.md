@@ -91,7 +91,7 @@ We can see that the opensuse from the vagrant cloud is now outdated. To update t
 	Latest installed version: 0.0.1
 	Version constraints: > 0.0.1
 	Provider: virtualbox
-	Updating 'elatov/opensuse13-32' with provider 'virtualbox' from version
+	Updating `elatov/opensuse13-32` with provider 'virtualbox' from version
 	'0.0.1' to '0.0.2'...
 	Loading metadata for box 'https://vagrantcloud.com/elatov/opensuse13-32'
 	Adding box 'elatov/opensuse13-32' (v0.0.2) for provider: virtualbox
