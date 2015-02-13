@@ -1,8 +1,10 @@
 ---
 layout: page
-title:  Recent Posts
+title:  VirtuallyHyper
 ---
 {% include JB/setup %}
+
+## Recent posts
 
 <ul class="posts">
 {% for post in site.posts  limit:10 %}
